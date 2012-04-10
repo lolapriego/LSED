@@ -1,34 +1,34 @@
 #include "MT-10.h"
 
 
-//función que se ejecuta después de init
+//funciÃ³n que se ejecuta despuÃ©s de init
 //se ejecuta constantemente, sirve para seleccionar el estado del sistema
 void bucleMain(void){
 char opcion;
 
 printf("Seleccione una de las siguientes opciones\n");
-output("1) Caracterización de filtros\n");
-output("2) Ecualización Gráfica\n");
-output("3) Incorporación de Reverberación Simple\n");
+output("1) CaracterizaciÃ³n de filtros\n");
+output("2) EcualizaciÃ³n GrÃ¡fica\n");
+output("3) IncorporaciÃ³n de ReverberaciÃ³n Simple\n");
 output("---------------------------------\n");
 opcion=teclado();
 
 switch (opcion){
-case '1': printf("Caracterización de filtros\n");
+case '1': printf("CaracterizaciÃ³n de filtros\n");
 	GestionCaracterizacion();
 	break;
-case '2': printf("Ecualización Gráfica\n");
+case '2': printf("EcualizaciÃ³n GrÃ¡fica\n");
 	GestionEcualizacion();
 	break;
-case'3': printf("Incorporación de Reverberación Simple\n");
+case'3': printf("IncorporaciÃ³n de ReverberaciÃ³n Simple\n");
 	GestionReverberacion();
 	break;
-default: output("Tecla no válida\n");
+default: output("Tecla no vÃ¡lida\n");
 }
 }//buclemain
 
 
-//función para seleccionar el filtro con el que se desea filtrar
+//funciÃ³n para seleccionar el filtro con el que se desea filtrar
 void GestionCaracterizacion(){
 char opcion;
 printf("Seleccione el filtro que desea caracterizar u 8 para volver al menu inicio\n");
@@ -45,17 +45,8 @@ estadoFiltrado = 1;
 
 
 void GestionEcualizacion(){ //implementar interfaz
-  /*int i;
-  int salidas [7];
-  int output;
-  estadoFiltrado = 4;
-  for ( i = 0; i<7; i++){
-	salidas [i] = filtrado (leerADC(), i);//implementar diferentes historiales
-  }
-  for (i = 0; i<7; i++)
-    output += salidas [i];
-*/
-  
+  //interfaz pendiente para energías;
+  estadoFiltrado = 2;
 }
 
 
@@ -73,7 +64,7 @@ void swInit(){
  int i;
  int j;
 
-	filtros[0].banda=32; // no habría que inicializarlo aquí, no variables globale son constantes!!
+	filtros[0].banda=32; // no habrÃ­a que inicializarlo aquÃ­, no variables globale son constantes!!
 	filtros[0].ganancia=8;
 	filtros[0].nv=0;
 	filtros[1].banda=64;
@@ -115,40 +106,42 @@ void hwInit(){
 //------------------------------------------------------
 // void rutina_tout0(void)
 //
-// Descripción:
-//   Función de atención a la interrupción para TIMER0
-// Si se ha empezado a filtrar llama a la función filtrado con cada interrupción
+// DescripciÃ³n:
+//   FunciÃ³n de atenciÃ³n a la interrupciÃ³n para TIMER0
+// Si se ha empezado a filtrar llama a la funciÃ³n filtrado con cada interrupciÃ³n
 //------------------------------------------------------
 void rutina_tout0(void)
 {
   mbar_writeShort(MCFSIM_TER0,BORRA_REF); 	// Reset del bit de fin de cuent
   if( estadoFiltrado == 1)
-  filtrado(leerADC(), filtro);
+  DAC_dato(filtrado(leerADC(), filtro) + 0x800);
+  else if (estadoFiltrado == 2)
+  DAC_dato (filtradoMultiple() + 0x800 );
 
 }
 
 //------------------------------------------------------
 // void initInt(void)
 //
-// Descripción:
-//   Función por defecto de inicialización de la interrupción del timer 0
+// DescripciÃ³n:
+//   FunciÃ³n por defecto de inicializaciÃ³n de la interrupciÃ³n del timer 0
 //------------------------------------------------------
 void initInt()
 {
-  mbar_writeByte(MCFSIM_PIVR,V_BASE);			// Fija comienzo de vectores de interrupción en V_BASE.
-  ACCESO_A_MEMORIA_LONG(DIR_VTMR0)= (ULONG)_prep_TOUT0; // Escribimos la dirección de la función para TMR0
+  mbar_writeByte(MCFSIM_PIVR,V_BASE);			// Fija comienzo de vectores de interrupciÃ³n en V_BASE.
+  ACCESO_A_MEMORIA_LONG(DIR_VTMR0)= (ULONG)_prep_TOUT0; // Escribimos la direcciÃ³n de la funciÃ³n para TMR0
   output("COMIENZA EL PROGRAMA\r\n");
   mbar_writeShort(MCFSIM_TMR0, (PRESCALADO-1)<<8|0x3D);		// TMR0: PS=1-1=0 CE=00 OM=1 ORI=1 FRR=1 CLK=10 RST=1
   mbar_writeShort(MCFSIM_TCN0, 0x0000);		// Ponemos a 0 el contador del TIMER0
   mbar_writeShort(MCFSIM_TRR0, CNT_INT1);	// Fijamos la cuenta final del contador
-  mbar_writeLong(MCFSIM_ICR1, 0x8888C888);	// Marca la interrupción del TIMER0 como no pendiente
+  mbar_writeLong(MCFSIM_ICR1, 0x8888C888);	// Marca la interrupciÃ³n del TIMER0 como no pendiente
   sti();					// Habilitamos interrupciones
 }
 
 
 
 
-void iO () //para comprobar rápido que todo va bien, lee del ADC y debería sacar lo mismo por el DAC escalado x2
+void iO () //para comprobar rÃ¡pido que todo va bien, lee del ADC y deberÃ­a sacar lo mismo por el DAC escalado x2
 {
 WORD tension1;
 int lectura;
@@ -157,7 +150,7 @@ int lectura;
 if(lectura & 0x00000800)
 lectura = lectura | 0xFFFFF000;
 
-// Calcula la tensión correspondiente al valor leído
+// Calcula la tensiÃ³n correspondiente al valor leÃ­do
 tension = ((double)lectura/FONDO_ESCALA);
 
 tension1 = (tension * 0xFFF) ;
@@ -168,7 +161,7 @@ DAC_dato(tension1 + 0x800);
 
 
 
-//lee un dato del ADC y devuelve la tensión 
+//lee un dato del ADC y devuelve la tensiÃ³n 
 int leerADC(){
 int lectura;
  lectura = ADC_dato();
@@ -182,13 +175,12 @@ return lectura;
 
 
 
-//dada una tensión de entrada saca por el DAC la tensión de salida filtrada
+//dada una tensiÃ³n de entrada saca por el DAC la tensiÃ³n de salida filtrada
 
-void filtrado(int tension_ent, int filtro){
+int filtrado(int tension_ent, int filtro){
 
 int  salida;
 int aux;
-
 salida= B0*tension_ent + B1* historia[0][filtro] -a[0][filtro]* historia[0][filtro] + historia[1][filtro]*(-a[1][filtro]+B2);
 aux = historia[0][filtro];
 historia[0][filtro] = ( B0*tension_ent -a[0][filtro]* historia[0][filtro] -a[1][filtro]*historia[1][filtro] ) >>10;
@@ -196,7 +188,16 @@ historia[1][filtro] = aux;
 salida = salida >> 10;
 salida = salida * filtros[filtro].ganancia;
 salida = salida >> 10;
-DAC_dato(salida + 0x800);
+return salida;
+}
+
+int filtradoMultiple () {
+  int output;
+  int i;
+  output = 0;
+   output += filtrado(leerADC(), filtro);
+  //output = output >> 1;
+  return output;
 }
 
 void rutina_int1(void){
@@ -219,6 +220,5 @@ void rutina_tout2(void){
 
 void rutina_tout3(void){
 }
-
 
 
