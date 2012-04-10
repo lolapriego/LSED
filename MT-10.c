@@ -6,7 +6,6 @@
 void bucleMain(void){
 char opcion;
 
-
 printf("Seleccione una de las siguientes opciones\n");
 output("1) Caracterización de filtros\n");
 output("2) Ecualización Gráfica\n");
@@ -25,9 +24,6 @@ case'3': printf("Incorporación de Reverberación Simple\n");
 	GestionReverberacion();
 	break;
 default: output("Tecla no válida\n");
-
- 
-
 }
 }//buclemain
 
@@ -41,15 +37,25 @@ if(opcion=='8')
 return;
 filtro= opcion - '0' -1;
 printf("Ha seleccionado el filtro: %d\n",filtro +1); 
-estadoFiltrado=1;
-filtrado(leerADC(), filtro);
+estadoFiltrado = 1;
 
 
 }
 
 
 
-void GestionEcualizacion(){
+void GestionEcualizacion(){ //implementar interfaz
+  /*int i;
+  int salidas [7];
+  int output;
+  estadoFiltrado = 4;
+  for ( i = 0; i<7; i++){
+	salidas [i] = filtrado (leerADC(), i);//implementar diferentes historiales
+  }
+  for (i = 0; i<7; i++)
+    output += salidas [i];
+*/
+  
 }
 
 
@@ -65,6 +71,7 @@ void __init(){
 
 void swInit(){
  int i;
+ int j;
 
 	filtros[0].banda=32; // no habría que inicializarlo aquí, no variables globale son constantes!!
 	filtros[0].ganancia=8;
@@ -90,12 +97,11 @@ void swInit(){
 
 	estadoFiltrado=0;
 	filtro=0; //filtro por defecto
-	for(i=0;i <2;i++){
-	historia[i]=0;
-	}
-
-	
-	
+	for(i=0; i<2 ;i++){
+	  for(j = 0; j < 7; j++){
+	    historia[i][j] = 0;
+	  }
+	}	
 }
 
 void hwInit(){
@@ -115,9 +121,9 @@ void hwInit(){
 //------------------------------------------------------
 void rutina_tout0(void)
 {
-  mbar_writeShort(MCFSIM_TER0,BORRA_REF); 	// Reset del bit de fin de cuenta
-if(estadoFiltrado)
-	  filtrado(leerADC(), filtro);
+  mbar_writeShort(MCFSIM_TER0,BORRA_REF); 	// Reset del bit de fin de cuent
+  if( estadoFiltrado == 1)
+  filtrado(leerADC(), filtro);
 
 }
 
@@ -180,58 +186,39 @@ return lectura;
 
 void filtrado(int tension_ent, int filtro){
 
-int salida;
-int tension1;
+int  salida;
 int aux;
 
-if(estadoFiltrado==1){
-	int i;
-	for(i=0;i <2;i++){ // cada vez que se reinicie el filtrado, borramos el historial
-	historia[i]=0;
-	}
-	estadoFiltrado=2;
-	salida= B0 * tension_ent;
-	historia[0] = (B0*tension_ent) >> 10;
-	salida = salida >> 10;
-	salida = salida * filtros[filtro].ganancia;
-	salida = salida >> 10;
-	DAC_dato(salida + 0x800);
-}
-
-else if (estadoFiltrado==2) { 
-estadoFiltrado = 3;
-salida = B0 * tension_ent + B1 * historia[0] -a[0][filtro] * historia[0];
-historia[1] = historia[0];
-historia[0] = ( B0 * tension_ent -a[0][filtro] * historia[0] ) >>10;
+salida= B0*tension_ent + B1* historia[0][filtro] -a[0][filtro]* historia[0][filtro] + historia[1][filtro]*(-a[1][filtro]+B2);
+aux = historia[0][filtro];
+historia[0][filtro] = ( B0*tension_ent -a[0][filtro]* historia[0][filtro] -a[1][filtro]*historia[1][filtro] ) >>10;
+historia[1][filtro] = aux;
 salida = salida >> 10;
 salida = salida * filtros[filtro].ganancia;
 salida = salida >> 10;
 DAC_dato(salida + 0x800);
 }
 
-else if(estadoFiltrado==3){
-salida= B0*tension_ent + B1* historia[0] -a[0][filtro]* historia[0] + historia[1]*(-a[1][filtro]+B2);
-aux = historia[0];
-historia[0]= ( B0*tension_ent -a[0][filtro]* historia[0] -a[1][filtro]*historia[1] ) >>10;
-historia[1]=aux;
-salida = salida >> 10;
-salida = salida * filtros[filtro].ganancia;
-salida = salida >> 10;
-DAC_dato(salida + 0x800);
+void rutina_int1(void){
 }
 
- 
-
+void rutina_int2(void){
 }
 
-void rutina_int1(void){}
+void rutina_int3(void){
+}
 
-void rutina_int2(void){}
+void rutina_int4(void){
+}
 
-void rutina_int3(void){}
+void rutina_tout1(void){
+}
 
-void rutina_int4(void){}
-void rutina_tout1(void){}
-void rutina_tout2(void){}
-void rutina_tout3(void){}
+void rutina_tout2(void){
+}
+
+void rutina_tout3(void){
+}
+
+
 
