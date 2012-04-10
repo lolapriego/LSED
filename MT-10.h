@@ -6,7 +6,7 @@
 #include "m5272.h"
 
 
-#define V_BASE 0x40				  // Dirección de inicio de los vectores de interrupción
+#define V_BASE 0x40  			  // Dirección de inicio de los vectores de interrupción
 #define DIR_VTMR0 4*(V_BASE+5)			  // Dirección del vector de TMR0
 
 #define FREC_INT 8000				  // Frec. de interr. TMR0 = 8000 Hz 
@@ -34,9 +34,9 @@ int nv;
 
 t_filtro  filtros[NUM_FILT];
 
-int a [2][7] = {{-2030, -2029, -1970, -1878, -1660, -1115, 141} , {1006, 988, 955, 890, 772, 569, 239}};
+int a [2][7] = {{-2029, -2011, -1970, -1878, -1660, -1115, 141} , {1006, 988, 955, 890, 772, 569, 239}};
 
-int historia[2]; //pendiente de retocar para que no sea global podría ser static en filtrado
+int historia[2][7]; //pendiente de retocar para que no sea global podría ser static en filtrado
 int estadoFiltrado; //variable global que marca el estado del sistema para filtrar
 int filtro;  //variable global que marca el filtro seleccionado en el sistema
 
@@ -59,5 +59,6 @@ void rutina_tout1(void);
 void rutina_tout2(void);
 void rutina_tout3(void);
 int leerADC(void);
-void filtrado(int tension, int filtro); //pendiente de hacer una sola matriz historial
+int filtrado(int tension, int filtro); //pendiente de hacer una sola matriz historial
+int filtradoMultiple (void);
 
