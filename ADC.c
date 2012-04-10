@@ -1,24 +1,24 @@
 //------------------------------------------------------------------------------
 // ADC_GNU.c
 //
-//   Programa sencillo para mostrar el manejo de un conversor Analógico
+//   Programa sencillo para mostrar el manejo de un conversor Analï¿½gico
 //   Digital utilizando QSPI (Queued Serial Peripheral Interface).
 //
-// Autores: Juan Manuel Montero y Rubén San Segundo
-// Adaptado a C por: Javier Guillén Álvarez
+// Autores: Juan Manuel Montero y Rubï¿½n San Segundo!!!!!
+// Adaptado a C por: Javier Guillï¿½n ï¿½lvarez
 //------------------------------------------------------------------------------
 #include "m5272lib.c"
 #include "m5272adc_dac.c"
 #include "printf.c"
 
-#define FONDO_ESCALA 0xFFF	// Valor de lectura máxima del ADC
-#define V_MAX 5			// Valores de tensión máxima del ADC
+#define FONDO_ESCALA 0xFFF	// Valor de lectura mï¿½xima del ADC
+#define V_MAX 5			// Valores de tensiï¿½n mï¿½xima del ADC
 
 //------------------------------------------------------
 // void __init(void)
 //
-// Descripción:
-//   Función por defecto de inicialización del sistema
+// Descripciï¿½n:
+//   Funciï¿½n por defecto de inicializaciï¿½n del sistema
 //
 //------------------------------------------------------
 void __init(void)
@@ -29,8 +29,8 @@ void __init(void)
 //------------------------------------------------------
 // void bucleMain(void)
 //
-// Descripción:
-//   Función del programa principal
+// Descripciï¿½n:
+//   Funciï¿½n del programa principal
 //
 //------------------------------------------------------
 void leeADC(void)
@@ -39,13 +39,13 @@ void leeADC(void)
   double tension;
 
   // Imprime intrucciones
-  output("\r\nCONECTE EN LA ENTRADA ANALÓGICA 1 UNA TENSIÓN ENTRE 0 Y 5 V.\r\n");
+  output("\r\nCONECTE EN LA ENTRADA ANALï¿½GICA 1 UNA TENSIï¿½N ENTRE 0 Y 5 V.\r\n");
   output("PULSE UNA TECLA PARA REALIZAR LA MEDIDA...\r\n");
 
-  // Espera a recibir un carácter
+  // Espera a recibir un carï¿½cter
   inch();
 
-  // Lee un dato de la entrada analógica 1
+  // Lee un dato de la entrada analï¿½gica 1
 //while(TRUE)
 //
   lectura = ADC_dato();
@@ -56,18 +56,18 @@ lectura = lectura | 0xFFFFF000;
 printf("%d",lectura);
 
 }
-  // Calcula la tensión correspondiente al valor leído
+  // Calcula la tensiï¿½n correspondiente al valor leï¿½do
   tension = V_MAX * ((double)lectura/FONDO_ESCALA);
 
 
   // Imprime la primera parte del mensaje de resultado
   output("VALOR MEDIDO ENTRE 0V (000000000000) Y 5V (111111111111) ES: ");
 printf("%d",tension);
-  // Imprime 'tensión' con 2 cifras decimales sin signo
+  // Imprime 'tensiï¿½n' con 2 cifras decimales sin signo
   outNumDec(10,tension,2,SIN_SIGNO); 
   output("V (");
 
-  // Imprime el dato leído en binario
+  // Imprime el dato leï¿½do en binario
   outNum(2, lectura, SIN_SIGNO);
 
   // Imprime el final del mensaje de resultado
@@ -75,8 +75,8 @@ printf("%d",tension);
 }
 
 //---------------------------------------------------------
-// Definición de rutinas de atención a la interrupción
-// Es necesario definirlas aunque estén vacías
+// Definiciï¿½n de rutinas de atenciï¿½n a la interrupciï¿½n
+// Es necesario definirlas aunque estï¿½n vacï¿½as
 void rutina_int1(void){}
 void rutina_int2(void){}
 void rutina_int3(void){}
