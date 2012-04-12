@@ -59,7 +59,7 @@
 
 	void iO (void);
 	int leerADC(void);
-	
-	int filtrado(int tension, int filtro); //pendiente de hacer una sola matriz historial
+
+	int filtrado(int tension); //pendiente de hacer una sola matriz historial
 	int filtradoMultiple (void);
 
