@@ -119,6 +119,9 @@ filtro=3; //filtro por defecto
 for(i=0; i<2 ;i++){
 for(j = 0; j < 7; j++){
 historia[i][j] = 0;
+
+estadoMuestra=0;
+
 }
 }
 }
@@ -235,6 +238,87 @@ int filtradoMultiple () {
   output = output >> 1;
   return output;
 }
+
+void puertoExcitaFilaLeds(void){
+  static int contador = 0;
+  UWORD valor_previo;
+  UWORD var;
+    UWORD valor = 1;  // Valor a escribir en el puerto de salida
+  UINT retVal = 3000; // Retardo introducido en microsegundos. (aprox. 3ms)// Desplazamiento del bit hacia la izquierda
+  int nivelEnergia=0;
+  int buffer[24];
+  if(estadoMuestra){
+  if(contador<24){
+  buffer [contador] = leerADC();
+  contador++;
+  }
+  for(int i=0;i<24;i++){
+  nivelEnergia+=(buffer[i]*buffer[i])/24;
+  }
+  if(nivelEnergia<Energias[0]){
+    var = lee16_puertoE();
+    valor_previo = var & 0x00FF;
+    set16_puertoS(0x0000 | valor_previo);
+    }
+    if(nivelEnergia<Energias[1]){
+    var = lee16_puertoE();
+    valor_previo = var & 0x00FF;
+    set16_puertoS(0x0100 | valor_previo);
+    }
+    if(nivelEnergia<Energias[2]){
+    var = lee16_puertoE();
+    valor_previo = var & 0x00FF;
+    set16_puertoS(0x0300 | valor_previo);
+    }
+    if(nivelEnergia<Energias[3]){
+    var = lee16_puertoE();
+    valor_previo = var & 0x00FF;
+    set16_puertoS(0x0700 | valor_previo);
+    }
+    if(nivelEnergia<Energias[4]){
+    var = lee16_puertoE();
+    valor_previo = var & 0x00FF;
+    set16_puertoS(0x0F00 | valor_previo);
+    }
+    if(nivelEnergia<Energias[5]){
+    var = lee16_puertoE();
+    valor_previo = var & 0x00FF;
+    set16_puertoS(0x1F00 | valor_previo);
+    }
+    if(nivelEnergia<Energias[6]){
+    var = lee16_puertoE();
+    valor_previo = var & 0x00FF;
+    set16_puertoS(0x3F00 | valor_previo);
+    }
+    if(nivelEnergia<Energias[7]){
+    var = lee16_puertoE();
+    valor_previo = var & 0x00FF;
+    set16_puertoS(07F00 | valor_previo);
+    }
+      if(nivelEnergia>=Energias[7]){
+    var = lee16_puertoE();
+    valor_previo = var & 0x00FF;
+    set16_puertoS(0xFF00 | valor_previo);
+    }
+    }
+  for(valor = 0x0000; valor < 0x0070; valor = valor + 16){
+    retardo(retVal);
+    var = lee16_puertoE();
+    valor_previo = var & 0xFF0F;
+        set16_puertoS(valor | valor_previo);
+  }
+  // Desplazamiento del bit hacia la derecha 
+  for(valor = 0x0060; valor<= 0x0000; valor = valor - 16){
+    retardo(retVal);
+    var = lee16_puertoE();
+    valor_previo = var & 0xFF0F;
+      set16_puertoS(valor | valor_previo);
+    }
+
+}
+
+
+
 
 void rutina_int1(void){
 }
