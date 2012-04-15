@@ -66,7 +66,7 @@ void GestionEcualizacion(){ //implementar interfaz
   nivel = teclado();
   if (nivel == '8' && nv[banda] != 0)
     nv[banda]--;
-  else if (nivel =='9' && nv[banda] != 7)
+  else if (nivel =='9' && nv[banda] != 8)
     nv[banda]++;
   else
     printf("Error, pulse la tecla adecuada la proxima vez");
@@ -240,11 +240,13 @@ int filtradoMultiple () {
   int output;
   int i;
   int tension;
+  int ganancia_energia [9] = {1024, 610, 364, 217, 129, 77, 46, 27, 21};
+
   output = 0;
   tension = leerADC();
   for(i=0; i<7 ;i++){
    filtro =i;
-   output += (filtrado(tension) * nv[0]) >> 10;
+   output += (filtrado(tension) * ganancia_energia[nv[i]]) >> 10;
  } 
 
   output = output >> 1;
