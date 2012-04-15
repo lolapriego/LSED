@@ -45,21 +45,34 @@ estadoFiltrado = 1;
 void GestionEcualizacion(){ //implementar interfaz
   char opcion;
   int banda;
+  char nivel;
   estadoFiltrado = 2; 
 
+  do{
   printf("\nBANDA:     32Hz   64Hz   125Hz   250Hz   500Hz   1kHz   2kHz\n");
   printf("Ganancia:  %d   %d   %d    %d    %d    %d   %d\n", filtros[0].gain, filtros[1].gain, filtros[2].gain, filtros[3].gain, filtros[4].gain, filtros[5].gain, filtros[6].gain);
   printf("(Nivel)      %d      %d      %d       %d       %d       %d       %d\n", nv[0], nv[1], nv[2], nv[3], nv[4], nv[5], nv[6]);
   printf("Seleccione la banda de la que desea modificar su nv de energia\n");
   
+  do{
   opcion = teclado();
   if(opcion <'1' || opcion>'7')
-    printf("Por favor seleccione una banda correcta, de %d a %d\n",1,7);
+    printf("Por favor seleccione una banda correcta, de %d a %d\n",1,7,8,9);
+  }while (opcion <'1' || opcion>'7');
   
-  banda = opcion - '0';
-  printf("Seleccione  u  para modificar su nv de energia\n");
-  
+  banda = opcion - '0' -1;
+  printf("Seleccione %d o %d para modificar el nv de energia de la banda\n", 8,9, banda +1);
+
+  nivel = teclado();
+  if (nivel == '8' && nv[banda] != 0)
+    nv[banda]--;
+  else if (nivel =='9' && nv[banda] != 7)
+    nv[banda]++;
+  else
+    printf("Error, pulse la tecla adecuada la proxima vez");
+  } while (opcion != '8');
 }
+
 
 void GestionReverberacion(){
 }
@@ -76,7 +89,7 @@ void swInit(){
  int j;
 
 for(i=0; i<7; i++){
- nv[0] = 0;
+ nv[i] = 0;
  }
 
 filtros[0].banda=32; // no habría que inicializarlo aquí, no variables globale son constantes!!
@@ -119,11 +132,10 @@ filtro=3; //filtro por defecto
 for(i=0; i<2 ;i++){
 for(j = 0; j < 7; j++){
 historia[i][j] = 0;
-
+}
+}
 estadoMuestra=0;
 
-}
-}
 }
 
 void hwInit(){

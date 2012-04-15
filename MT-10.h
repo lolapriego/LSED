@@ -41,7 +41,7 @@ TpuertoSalida puerto;
 
 t_filtro filtros[NUM_FILT];
 
-int nv[7] = {0, 0, 0, 0, 0, 0, 0};
+int nv[7];
 int historia[2][7]; //pendiente de retocar para que no sea global podría ser static en filtrado
 int estadoFiltrado; //variable global que marca el estado del sistema para filtrar
 int filtro; //variable global que marca el filtro seleccionado en el sistema
