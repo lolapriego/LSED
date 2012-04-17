@@ -74,4 +74,4 @@ int leerADC(void);
 int filtrado(int tension); //pendiente de hacer una sola matriz historial
 int filtradoMultiple (void);
 void puertoExcitaFilaLeds(void);
-
+int calcula_energia(void);

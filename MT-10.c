@@ -52,16 +52,18 @@ void GestionEcualizacion(){ //implementar interfaz
   printf("\nBANDA:     32Hz   64Hz   125Hz   250Hz   500Hz   1kHz   2kHz\n");
   printf("Ganancia:  %d   %d   %d    %d    %d    %d   %d\n", filtros[0].gain, filtros[1].gain, filtros[2].gain, filtros[3].gain, filtros[4].gain, filtros[5].gain, filtros[6].gain);
   printf("(Nivel)      %d      %d      %d       %d       %d       %d       %d\n", nv[0], nv[1], nv[2], nv[3], nv[4], nv[5], nv[6]);
-  printf("Seleccione la banda de la que desea modificar su nv de energia\n");
+  printf("Seleccione la banda de la que desea modificar su nv de energia o pulse %d o %d para salir\n",8,9);
   
-  do{
   opcion = teclado();
-  if(opcion <'1' || opcion>'7')
-    printf("Por favor seleccione una banda correcta, de %d a %d\n",1,7,8,9);
-  }while (opcion <'1' || opcion>'7');
+  if (opcion == '8' || opcion == '9')
+    break;
+  while(opcion <'1' || opcion>'7'){
+    printf("Por favor seleccione una banda correcta, de %d a %d\n",1,7);
+    opcion = teclado();
+  }
   
   banda = opcion - '0' -1;
-  printf("Seleccione %d o %d para modificar el nv de energia de la banda\n", 8,9, banda +1);
+  printf("Seleccione %d o %d para modificar el nv de energia de la banda %d\n", 8,9, banda +1);
 
   nivel = teclado();
   if (nivel == '8' && nv[banda] != 0)
@@ -251,6 +253,23 @@ int filtradoMultiple () {
 
   output = output >> 1;
   return output;
+}
+
+int calcula_energia(){
+  int i;
+  int nv_energia;
+  static int contador =0;
+  static int buffer[24] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+  if(contador<24){
+    buffer[contador] = leerADC();
+    contador++;
+  }
+  else 
+    contador = 0;
+  nv_energia = 0;
+  for(i=0; i< 24; i++)
+  nv_energia += buffer[i]*buffer[i]/24
+  return nv_energia;
 }
 
 void puertoExcitaFilaLeds(void){
