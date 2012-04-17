@@ -268,7 +268,7 @@ int calcula_energia(){
     contador = 0;
   nv_energia = 0;
   for(i=0; i< 24; i++)
-  nv_energia += buffer[i]*buffer[i]/24
+  nv_energia += buffer[i]*buffer[i]/24;
   return nv_energia;
 }
 
@@ -285,50 +285,50 @@ void puertoExcitaFilaLeds(void){
   buffer [contador] = leerADC();
   contador++;
   }
-  for(int i=0;i<24;i++){
-  nivelEnergia+=(buffer[i]*buffer[i])/24;
-  }
-  if(nivelEnergia<Energias[0]){
+ // for(int i=0;i<24;i++){
+ // nivelEnergia+=(buffer[i]*buffer[i])/24;
+ // }
+  if(nivelEnergia<nEnergias[0]){
     var = lee16_puertoE();
     valor_previo = var & 0x00FF;
     set16_puertoS(0x0000 | valor_previo);
     }
-    if(nivelEnergia<Energias[1]){
+    if(nivelEnergia<nEnergias[1]){
     var = lee16_puertoE();
     valor_previo = var & 0x00FF;
     set16_puertoS(0x0100 | valor_previo);
     }
-    if(nivelEnergia<Energias[2]){
+    if(nivelEnergia<nEnergias[2]){
     var = lee16_puertoE();
     valor_previo = var & 0x00FF;
     set16_puertoS(0x0300 | valor_previo);
     }
-    if(nivelEnergia<Energias[3]){
+    if(nivelEnergia<nEnergias[3]){
     var = lee16_puertoE();
     valor_previo = var & 0x00FF;
     set16_puertoS(0x0700 | valor_previo);
     }
-    if(nivelEnergia<Energias[4]){
+    if(nivelEnergia<nEnergias[4]){
     var = lee16_puertoE();
     valor_previo = var & 0x00FF;
     set16_puertoS(0x0F00 | valor_previo);
     }
-    if(nivelEnergia<Energias[5]){
+    if(nivelEnergia<nEnergias[5]){
     var = lee16_puertoE();
     valor_previo = var & 0x00FF;
     set16_puertoS(0x1F00 | valor_previo);
     }
-    if(nivelEnergia<Energias[6]){
+    if(nivelEnergia<nEnergias[6]){
     var = lee16_puertoE();
     valor_previo = var & 0x00FF;
     set16_puertoS(0x3F00 | valor_previo);
     }
-    if(nivelEnergia<Energias[7]){
+    if(nivelEnergia<nEnergias[7]){
     var = lee16_puertoE();
     valor_previo = var & 0x00FF;
-    set16_puertoS(07F00 | valor_previo);
+    set16_puertoS(0x7F00 | valor_previo);
     }
-      if(nivelEnergia>=Energias[7]){
+      if(nivelEnergia>=nEnergias[7]){
     var = lee16_puertoE();
     valor_previo = var & 0x00FF;
     set16_puertoS(0xFF00 | valor_previo);
