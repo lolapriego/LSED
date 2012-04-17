@@ -286,16 +286,8 @@ void puertoExcitaFilaLeds(void){
   UWORD var;
     UWORD valor = 1;  // Valor a escribir en el puerto de salida
   UINT retVal = 3000; // Retardo introducido en microsegundos. (aprox. 3ms)// Desplazamiento del bit hacia la izquierda
-  int nivelEnergia=0;
-  int buffer[24];
-  if(estadoMuestra){
-  if(contador<24){
-  buffer [contador] = leerADC();
-  contador++;
-  }
- // for(int i=0;i<24;i++){
- // nivelEnergia+=(buffer[i]*buffer[i])/24;
- // }
+  int nivelEnergia;
+  nivelEnergia = calcula_energia(leerADC());
   if(nivelEnergia<nEnergias[0]){
     var = lee16_puertoE();
     valor_previo = var & 0x00FF;
@@ -341,7 +333,7 @@ void puertoExcitaFilaLeds(void){
     valor_previo = var & 0x00FF;
     set16_puertoS(0xFF00 | valor_previo);
     }
-    }
+    
   for(valor = 0x0000; valor < 0x0070; valor = valor + 16){
     retardo(retVal);
     var = lee16_puertoE();
