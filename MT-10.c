@@ -157,11 +157,19 @@ void hwInit(){
 //------------------------------------------------------
 void rutina_tout0(void)
 {
+  int tension; //pendiente de modificar nombre
+  int energia;
   mbar_writeShort(MCFSIM_TER0,BORRA_REF); // Reset del bit de fin de cuent
-  if( estadoFiltrado == 1)
-  DAC_dato(filtrado(leerADC()) + 0x800);
-  else if (estadoFiltrado == 2)
-  DAC_dato (filtradoMultiple() + 0x800 );
+  if( estadoFiltrado == 1){
+    tension = filtrado(leerADC()); 
+    DAC_dato(tension + 0x800);
+    energia = calcula_energia(tension);
+  }
+  else if (estadoFiltrado == 2){
+    tension = filtradoMultiple();
+    DAC_dato (tension + 0x800 );
+    energia = calcula_energia(tension);
+  }
 
 }
 
@@ -255,13 +263,13 @@ int filtradoMultiple () {
   return output;
 }
 
-int calcula_energia(){
+int calcula_energia(int tension){
   int i;
   int nv_energia;
   static int contador =0;
   static int buffer[24] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
   if(contador<24){
-    buffer[contador] = leerADC();
+    buffer[contador] = tension;
     contador++;
   }
   else 
