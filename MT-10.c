@@ -168,8 +168,10 @@ void rutina_tout0(void)
   else if (estadoFiltrado == 2){
     tension = filtradoMultiple();
     DAC_dato (tension + 0x800 );
-    energia = calcula_energia(tension);
+   // energia = calcula_energia(tension);
   }
+
+
 
 }
 
@@ -234,7 +236,7 @@ int filtrado(int tension_ent){
 
 int salida;
 int aux;
-int a [2][7] = {{-2029, -2011, -1970, -1878, -1660, -1115, 141} , {1006, 988, 955, 890, 772, 569, 239}};
+static int a [2][7] = {{-2029, -2011, -1970, -1878, -1660, -1115, 141} , {1006, 988, 955, 890, 772, 569, 239}};
 
 salida= B0*tension_ent + B1* historia[0][filtro] -a[0][filtro]* historia[0][filtro] + historia[1][filtro]*(-a[1][filtro]+B2);
 aux = historia[0][filtro];
@@ -250,7 +252,7 @@ int filtradoMultiple () {
   int output;
   int i;
   int tension;
-  int ganancia_energia [9] = {1024, 610, 364, 217, 129, 77, 46, 27, 21};
+  static int ganancia_energia [9] = {1024, 610, 364, 217, 129, 77, 46, 27, 21};
 
   output = 0;
   tension = leerADC();
@@ -373,5 +375,6 @@ void rutina_tout2(void){
 
 void rutina_tout3(void){
 }
+
 
 
