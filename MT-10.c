@@ -46,14 +46,14 @@ void GestionEcualizacion(){ //implementar interfaz
   char opcion;
   int banda;
   char nivel;
-  estadoFiltrado = 2; 
+  estadoFiltrado = 2;
 
   do{
   printf("\nBANDA:     32Hz   64Hz   125Hz   250Hz   500Hz   1kHz   2kHz\n");
   printf("Ganancia:  %d   %d   %d    %d    %d    %d   %d\n", filtros[0].gain, filtros[1].gain, filtros[2].gain, filtros[3].gain, filtros[4].gain, filtros[5].gain, filtros[6].gain);
   printf("(Nivel)      %d      %d      %d       %d       %d       %d       %d\n", nv[0], nv[1], nv[2], nv[3], nv[4], nv[5], nv[6]);
   printf("Seleccione la banda de la que desea modificar su nv de energia o pulse %d o %d para salir\n",8,9);
-  
+
   opcion = teclado();
   if (opcion == '8' || opcion == '9')
     break;
@@ -61,7 +61,7 @@ void GestionEcualizacion(){ //implementar interfaz
     printf("Por favor seleccione una banda correcta, de %d a %d\n",1,7);
     opcion = teclado();
   }
-  
+
   banda = opcion - '0' -1;
   printf("Seleccione %d o %d para modificar el nv de energia de la banda %d\n", 8,9, banda +1);
 
@@ -161,7 +161,7 @@ void rutina_tout0(void)
   int energia;
   mbar_writeShort(MCFSIM_TER0,BORRA_REF); // Reset del bit de fin de cuent
   if( estadoFiltrado == 1){
-    tension = filtrado(leerADC()); 
+    tension = filtrado(leerADC());
     DAC_dato(tension + 0x800);
     energia = calcula_energia(tension);
   }
@@ -210,7 +210,7 @@ tension = ((double)lectura/FONDO_ESCALA);
 
 tension1 = (tension * 0xFFF) ;
 DAC_dato(tension1 + 0x800);
-     
+
 }
 
 
@@ -259,7 +259,7 @@ int filtradoMultiple () {
   for(i=0; i<7 ;i++){
    filtro =i;
    output += (filtrado(tension) * ganancia_energia[nv[i]]) >> 10;
- } 
+ }
 
   output = output >> 1;
   return output;
@@ -274,7 +274,7 @@ int calcula_energia(int tension){
     buffer[contador] = tension;
     contador++;
   }
-  else 
+  else
     contador = 0;
   nv_energia = 0;
   for(i=0; i< 24; i++)
@@ -282,75 +282,42 @@ int calcula_energia(int tension){
   return nv_energia;
 }
 
-void puertoExcitaFilaLeds(void){
-  static int contador = 0;
-  UWORD valor_previo;
-  UWORD var;
-    UWORD valor = 1;  // Valor a escribir en el puerto de salida
+ void puertoExcitaFilaLeds(void){
+
+  UWORD led[9]={0x0000,0x0100,0x0300,0x0700,0x0F00,0x1F00,0x3F00,0x7F00,0xFF00};
+  int i;
+//  UWORD var = 0;
+    UWORD valor = 1;
+
+    UWORD valor_previo = 1;
+ // Valor a escribir en el puerto de salida
   UINT retVal = 3000; // Retardo introducido en microsegundos. (aprox. 3ms)// Desplazamiento del bit hacia la izquierda
   int nivelEnergia;
   nivelEnergia = calcula_energia(leerADC());
-  if(nivelEnergia<nEnergias[0]){
-    var = lee16_puertoE();
-    valor_previo = var & 0x00FF;
-    set16_puertoS(0x0000 | valor_previo);
-    }
-    if(nivelEnergia<nEnergias[1]){
-    var = lee16_puertoE();
-    valor_previo = var & 0x00FF;
-    set16_puertoS(0x0100 | valor_previo);
-    }
-    if(nivelEnergia<nEnergias[2]){
-    var = lee16_puertoE();
-    valor_previo = var & 0x00FF;
-    set16_puertoS(0x0300 | valor_previo);
-    }
-    if(nivelEnergia<nEnergias[3]){
-    var = lee16_puertoE();
-    valor_previo = var & 0x00FF;
-    set16_puertoS(0x0700 | valor_previo);
-    }
-    if(nivelEnergia<nEnergias[4]){
-    var = lee16_puertoE();
-    valor_previo = var & 0x00FF;
-    set16_puertoS(0x0F00 | valor_previo);
-    }
-    if(nivelEnergia<nEnergias[5]){
-    var = lee16_puertoE();
-    valor_previo = var & 0x00FF;
-    set16_puertoS(0x1F00 | valor_previo);
-    }
-    if(nivelEnergia<nEnergias[6]){
-    var = lee16_puertoE();
-    valor_previo = var & 0x00FF;
-    set16_puertoS(0x3F00 | valor_previo);
-    }
-    if(nivelEnergia<nEnergias[7]){
-    var = lee16_puertoE();
-    valor_previo = var & 0x00FF;
-    set16_puertoS(0x7F00 | valor_previo);
-    }
-      if(nivelEnergia>=nEnergias[7]){
-    var = lee16_puertoE();
-    valor_previo = var & 0x00FF;
-    set16_puertoS(0xFF00 | valor_previo);
-    }
-    
+  for(i=0; i< 9; i++){
+  if(nivelEnergia<nEnergias[i]){
+  puerto_S = puerto_S & 0x00FF;
+  set16_puertoS(led[i]|puerto_S);
+  }
+  if(nivelEnergia>=nEnergias[7]){
+  puerto_S = puerto_S & 0x00FF;
+      set16_puertoS(led[8] | puerto_S);
+     }
+}
+
   for(valor = 0x0000; valor < 0x0070; valor = valor + 16){
     retardo(retVal);
-    var = lee16_puertoE();
-    valor_previo = var & 0xFF0F;
-        set16_puertoS(valor | valor_previo);
+  puerto_S= puerto_S & 0xFF0F;
+        set16_puertoS(valor | puerto_S);
   }
-  // Desplazamiento del bit hacia la derecha 
+  // Desplazamiento del bit hacia la derecha
   for(valor = 0x0060; valor<= 0x0000; valor = valor - 16){
     retardo(retVal);
-    var = lee16_puertoE();
-    valor_previo = var & 0xFF0F;
-      set16_puertoS(valor | valor_previo);
-    }
+  puerto_S= puerto_S & 0xFF0F;
+        set16_puertoS(valor | puerto_S);
 
 }
+ }
 
 
 
