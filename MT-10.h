@@ -6,14 +6,14 @@
 #include "m5272.h"
 
 
-#define V_BASE 0x40 // Dirección de inicio de los vectores de interrupción
-#define DIR_VTMR0 4*(V_BASE+5) // Dirección del vector de TMR0
+#define V_BASE 0x40 // Direcciï¿½n de inicio de los vectores de interrupciï¿½n
+#define DIR_VTMR0 4*(V_BASE+5) // Direcciï¿½n del vector de TMR0
 
 #define FREC_INT 8000 // Frec. de interr. TMR0 = 8000 Hz
 #define PRESCALADO 2
 #define CNT_INT1 MCF_CLK/(FREC_INT*PRESCALADO*16) // Valor de precarga del temporizador de interrupciones TRR0
 #if CNT_INT1>0xFFFF
-#error PRESCALADO demasiado pequeño para esa frecuencia (CNT_INT1>0xFFFF)
+#error PRESCALADO demasiado pequeï¿½o para esa frecuencia (CNT_INT1>0xFFFF)
 #endif
 #define BORRA_REF 0x0002 // Valor de borrado de interr. pendientes de tout1 para TER0
 
@@ -42,7 +42,7 @@ TpuertoSalida puerto;
 t_filtro filtros[NUM_FILT];
 
 int nv[7];
-int historia[2][7]; //pendiente de retocar para que no sea global podría ser static en filtrado
+int historia[2][7]; //pendiente de retocar para que no sea global podrï¿½a ser static en filtrado
 int estadoFiltrado; //variable global que marca el estado del sistema para filtrar
 int filtro; //variable global que marca el filtro seleccionado en el sistema
 int nEnergias [9] = {200,559,1567,4386,12280, 34374,96223,269354, 753992};
@@ -74,4 +74,4 @@ int leerADC(void);
 int filtrado(int tension); //pendiente de hacer una sola matriz historial
 int filtradoMultiple (void);
 void puertoExcitaFilaLeds(void);
-int calcula_energia(void);
+int calcula_energia(int);
