@@ -4,6 +4,8 @@
   int nv_energia;
   int contador;
 
+  int retardo_reverberacion;
+
 
   // ===================
   // Funcion bucleMain
@@ -97,6 +99,15 @@
   // GestionReverberacion
   // ==============
   void GestionReverberacion(){
+    char atenuacion;
+
+    printf ("\nSeleccione la atenuación para el efecto reverberación\n");
+    atenuacion = teclado();
+
+    printf("\nSeleccione un retardo en escala de x100 milisegundos para el efecto reverberacion\n");
+    retardo_reverberacion = (teclado() - '0') * 800; // pasamos la tecla seleccionada al número de interrupciones necesarias
+
+    estado = 3;
   }
 
 
@@ -167,6 +178,8 @@
     fila_ilum = 0;
     nv_energia = 0;
     contador = 0;
+
+    retardo_reverberacion = 0;
   }
 
 
