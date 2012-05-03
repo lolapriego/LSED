@@ -48,7 +48,7 @@
     filtro= opcion - '0' -1;
     printf("Ha seleccionado el filtro: %d\n",filtro +1);
 
-    estadoFiltrado = 1;
+    estado = 1;
   }
 
 
@@ -59,7 +59,7 @@
     char opcion;
     int banda;
     char nivel;
-    estadoFiltrado = 2;
+    estado = 2;
 
     do{
       printf("\nBANDA:     32Hz   64Hz   125Hz   250Hz   500Hz   1kHz   2kHz\n");
@@ -155,7 +155,7 @@
     filtros[6].nv=0;
     filtros[6].gain = 1024;
 
-    estadoFiltrado=0;
+    estado=0;
     filtro=0; //filtro por defecto
 
     for(i=0; i<2 ;i++)
@@ -193,14 +193,14 @@
     int energia;
 
     mbar_writeShort(MCFSIM_TER0,BORRA_REF); // Reset del bit de fin de cuent
-    if( estadoFiltrado == 1){
+    if( estado == 1){
       tension = filtrado(leerADC());
       DAC_dato(tension + 0x800);
       if(fila_ilum == filtro)
         nv_energia+= tension * tension;
     }
 
-    else if (estadoFiltrado == 2){
+    else if (estado == 2){
       tension = filtradoMultiple();
       DAC_dato (tension + 0x800 );
     }

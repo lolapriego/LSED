@@ -41,7 +41,7 @@ t_filtro filtros[NUM_FILT];
 
 int nv[7];
 int historia[2][7]; //pendiente de retocar para que no sea global podr�a ser static en filtrado
-int estadoFiltrado; //variable global que marca el estado del sistema para filtrar
+int estado; //variable global que marca el estado del sistema para filtrar
 int filtro; //variable global que marca el filtro seleccionado en el sistema
 int nEnergias [9] = {200,559,1567,4386,12280, 34374,96223,269354, 753992};
 int estadoMuestra;
