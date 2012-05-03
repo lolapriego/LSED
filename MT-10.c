@@ -87,7 +87,7 @@
           nv[banda]++;
         else
           printf("Error, pulse la tecla adecuada la proxima vez");
-      } while(opcion!= '5');
+      } while(nivel != '5');
 
     } while (opcion != '8');
   }
