@@ -5,7 +5,7 @@
   int contador;
 
   int retardo_reverberacion;
-  int amplitud_reverberacion;
+  int atenuacion_reverberacion;
 
   int bufferCircular(int);
 
@@ -103,7 +103,7 @@
   void GestionReverberacion(){
 
     printf ("\nSeleccione la atenuación para el efecto reverberación\n");
-    atenuacion = teclado() - '0';
+    atenuacion_reverberacion = teclado() - '0';
 
     printf("\nSeleccione un retardo en escala de x100 milisegundos para el efecto reverberacion\n");
     retardo_reverberacion = (teclado() - '0') * 800; // pasamos la tecla seleccionada al número de interrupciones necesarias
@@ -181,7 +181,7 @@
     contador = 0;
 
     retardo_reverberacion = 0;
-    atenuacion = 0;
+    atenuacion_reverberacion = 0;
   }
 
 
@@ -220,9 +220,8 @@
       DAC_dato (tension + 0x800 );
     }
     else if (estado == 3){
-      if (retardo_reverberacion == 0){
-        DAC_dato ( 000000 + 0x800); // aquí se llamará la función de BufferCircular
-      }
+      tension = leerADC();
+      DAC_dato( bufferCircular(tension) + tension + 0x800);
     }
 
   if(contador<24){
@@ -365,8 +364,20 @@
   // =============
   // lee un dato del ADC lo almacena en un buffer, lo suma y lo devuelve
   // =============
-  int bufferCircular () {
-    int buffer[]
+  int bufferCircular (int tension) {
+    static int buffer[retardo_reverberacion];
+    static int * muestra = buffer;
+
+    if( muestra < buffer + retardo_reverberacion){
+      * muestra = tension / atenuacion_reverberacion;
+      muestra ++;
+    }
+    else{
+      muestra = buffer;
+      *muestra = tension / atenuacion_reverberacion;
+    }
+
+    return buffer[retardo_reverberacion -1];
   }
 
 
