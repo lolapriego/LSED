@@ -1,4 +1,4 @@
- #include "MT-10.h"
+  #include "MT-10.h"
 int fila_ilum=0;
 int nv_energia=0;
 int contador =0;
@@ -167,17 +167,18 @@ void rutina_tout0(void)
   if( estadoFiltrado == 1){
     tension = filtrado(leerADC()); 
     DAC_dato(tension + 0x800);
-//    energia = calcula_energia(tension);
+if(fila_ilum == filtro)
+   nv_energia+= tension * tension;
+
   }
   else if (estadoFiltrado == 2){
     tension = filtradoMultiple();
     DAC_dato (tension + 0x800 );
-    //energia = calcula_energia(tension);
   }
 
 if(contador<24)
 {
-  contador++;
+	contador++;
 	
 }
 if (contador >= 24)
@@ -271,12 +272,13 @@ salida = salida >> 10;
 salida = salida * filtros[filtro].ganancia;
 salida = salida >> 10;
 return salida;
+
 }
 
 int filtradoMultiple () {
   int output;
   int i;
-int salida_unica;
+  int salida_unica;
   int tension;
   int ganancia_energia [9] = {1024, 610, 364, 217, 129, 77, 46, 27, 21};
 
@@ -284,10 +286,10 @@ int salida_unica;
   tension = leerADC();
   for(i=0; i<7 ;i++){
    filtro =i;
-salida_unica =  (filtrado(tension) * ganancia_energia[nv[i]]) >> 10;
+  salida_unica =  (filtrado(tension) * ganancia_energia[nv[i]]) >> 10;
    output += salida_unica;
-if(i==fila_ilum){
- nv_energia+= salida_unica*salida_unica;
+  if(i==fila_ilum){
+   nv_energia+= salida_unica*salida_unica;
 
 }
  } 
@@ -382,5 +384,6 @@ void rutina_tout2(void){
 
 void rutina_tout3(void){
 } 
+
 
 
