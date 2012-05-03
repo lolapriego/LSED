@@ -21,9 +21,7 @@
 #define NUM_FILT 7
 #define V_MAX 5
 #define FONDO_ESCALA 0xFFF
-#define B0 1024
-#define B1 0
-#define B2 -1024
+
 
 
 typedef struct{ //realmente son constantes, pensar donde se usan y quitarlo de global!
@@ -58,7 +56,6 @@ void GestionReverberacion(void);
 
 void swInit(void);
 void hwInit(void);
-void outputDAC(int *senal, int numMuestras);
 
 void rutina_tout0(void);
 void rutina_int1(void);
@@ -73,4 +70,3 @@ int leerADC(void);
 int filtrado(int tension); //pendiente de hacer una sola matriz historial
 int filtradoMultiple (void);
 void puertoExcitaFilaLeds(void);
-int calcula_energia(int);

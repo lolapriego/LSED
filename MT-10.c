@@ -260,9 +260,12 @@
   // aplica el sistema de la documentación
   // =============
   int filtrado(int tension_ent){
+    static int a [2][7] = {{-2029, -2011, -1970, -1878, -1660, -1115, 141} , {1006, 988, 955, 890, 772, 569, 239}};
+    static int B0 = 1024;
+    static int B1 = 0;
+    static int B2 = -1024;
     int salida;
     int aux;
-    static int a [2][7] = {{-2029, -2011, -1970, -1878, -1660, -1115, 141} , {1006, 988, 955, 890, 772, 569, 239}};
 
     aux = historia[0][filtro];
 
