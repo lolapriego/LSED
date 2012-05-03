@@ -1,5 +1,7 @@
-#include "MT-10.h"
-
+ #include "MT-10.h"
+int fila_ilum=0;
+int nv_energia=0;
+int contador =0;
 
 //función que se ejecuta después de init
 //se ejecuta constantemente, sirve para seleccionar el estado del sistema
@@ -7,23 +9,23 @@ void bucleMain(void){
 char opcion;
 
 printf("Seleccione una de las siguientes opciones\n");
-output("1) Caracterización de filtros\n");
-output("2) Ecualización Gráfica\n");
-output("3) Incorporación de Reverberación Simple\n");
+output("1) Caracterizacion de filtros\n");
+output("2) Ecualizacion Grafica\n");
+output("3) Incorporacion de Reverberacion Simple\n");
 output("---------------------------------\n");
 opcion=teclado();
 
 switch (opcion){
-case '1': printf("Caracterización de filtros\n");
+case '1': printf("Caracterizacion de filtros\n");
 GestionCaracterizacion();
 break;
-case '2': printf("Ecualización Gráfica\n");
+case '2': printf("Ecualizacion Gráfica\n");
 GestionEcualizacion();
 break;
-case'3': printf("Incorporación de Reverberación Simple\n");
+case'3': printf("Incorporacian de Reverberacion Simple\n");
 GestionReverberacion();
 break;
-default: output("Tecla no válida\n");
+default: output("Tecla no valida\n");
 }
 }//buclemain
 
@@ -42,26 +44,27 @@ estadoFiltrado = 1;
 
 
 
-void GestionEcualizacion(){ //implementar interfaz
+ void GestionEcualizacion(){ //implementar interfaz
   char opcion;
   int banda;
   char nivel;
-  estadoFiltrado = 2;
+  estadoFiltrado = 2; 
 
   do{
   printf("\nBANDA:     32Hz   64Hz   125Hz   250Hz   500Hz   1kHz   2kHz\n");
   printf("Ganancia:  %d   %d   %d    %d    %d    %d   %d\n", filtros[0].gain, filtros[1].gain, filtros[2].gain, filtros[3].gain, filtros[4].gain, filtros[5].gain, filtros[6].gain);
   printf("(Nivel)      %d      %d      %d       %d       %d       %d       %d\n", nv[0], nv[1], nv[2], nv[3], nv[4], nv[5], nv[6]);
   printf("Seleccione la banda de la que desea modificar su nv de energia o pulse %d o %d para salir\n",8,9);
-
+  
   opcion = teclado();
+//puertoExcitaFilaLeds();
   if (opcion == '8' || opcion == '9')
     break;
   while(opcion <'1' || opcion>'7'){
     printf("Por favor seleccione una banda correcta, de %d a %d\n",1,7);
     opcion = teclado();
   }
-
+  
   banda = opcion - '0' -1;
   printf("Seleccione %d o %d para modificar el nv de energia de la banda %d\n", 8,9, banda +1);
 
@@ -157,22 +160,40 @@ void hwInit(){
 //------------------------------------------------------
 void rutina_tout0(void)
 {
+
   int tension; //pendiente de modificar nombre
   int energia;
   mbar_writeShort(MCFSIM_TER0,BORRA_REF); // Reset del bit de fin de cuent
   if( estadoFiltrado == 1){
-    tension = filtrado(leerADC());
+    tension = filtrado(leerADC()); 
     DAC_dato(tension + 0x800);
-    energia = calcula_energia(tension);
+//    energia = calcula_energia(tension);
   }
   else if (estadoFiltrado == 2){
     tension = filtradoMultiple();
     DAC_dato (tension + 0x800 );
-   // energia = calcula_energia(tension);
+    //energia = calcula_energia(tension);
   }
 
-
-
+if(contador<24)
+{
+  contador++;
+	
+}
+if (contador >= 24)
+{
+	
+	puertoExcitaFilaLeds();
+	nv_energia=0;
+	contador =0;
+	if(fila_ilum<7){
+	fila_ilum++;
+	}
+	if(fila_ilum==7){
+	fila_ilum=0;
+	}
+	
+}
 }
 
 //------------------------------------------------------
@@ -210,7 +231,7 @@ tension = ((double)lectura/FONDO_ESCALA);
 
 tension1 = (tension * 0xFFF) ;
 DAC_dato(tension1 + 0x800);
-
+     
 }
 
 
@@ -238,10 +259,14 @@ int salida;
 int aux;
 static int a [2][7] = {{-2029, -2011, -1970, -1878, -1660, -1115, 141} , {1006, 988, 955, 890, 772, 569, 239}};
 
-salida= B0*tension_ent + B1* historia[0][filtro] -a[0][filtro]* historia[0][filtro] + historia[1][filtro]*(-a[1][filtro]+B2);
 aux = historia[0][filtro];
-historia[0][filtro] = ( B0*tension_ent -a[0][filtro]* historia[0][filtro] -a[1][filtro]*historia[1][filtro] ) >>10;
+
+salida = B0*tension_ent -a[0][filtro]* historia[0][filtro] -a[1][filtro]*historia[1][filtro];
+historia[0][filtro] = salida >> 10;
+
+salida += B1* historia[0][filtro] + historia[1][filtro]*B2;
 historia[1][filtro] = aux;
+
 salida = salida >> 10;
 salida = salida * filtros[filtro].ganancia;
 salida = salida >> 10;
@@ -251,76 +276,91 @@ return salida;
 int filtradoMultiple () {
   int output;
   int i;
+int salida_unica;
   int tension;
-  static int ganancia_energia [9] = {1024, 610, 364, 217, 129, 77, 46, 27, 21};
+  int ganancia_energia [9] = {1024, 610, 364, 217, 129, 77, 46, 27, 21};
 
   output = 0;
   tension = leerADC();
   for(i=0; i<7 ;i++){
    filtro =i;
-   output += (filtrado(tension) * ganancia_energia[nv[i]]) >> 10;
- }
+salida_unica =  (filtrado(tension) * ganancia_energia[nv[i]]) >> 10;
+   output += salida_unica;
+if(i==fila_ilum){
+ nv_energia+= salida_unica*salida_unica;
+
+}
+ } 
 
   output = output >> 1;
-  return output;
-}
 
-int calcula_energia(int tension){
+  return output;
+
+
+//puertoExcitaFilaLeds();
+} 
+
+/*int calcula_energia(int tension){
   int i;
-  int nv_energia;
+  
   static int contador =0;
   static int buffer[24] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-  if(contador<24){
+ if(contador<24){
     buffer[contador] = tension;
     contador++;
-  }
-  else
+  } 
+  else 
     contador = 0;
   nv_energia = 0;
   for(i=0; i< 24; i++)
   nv_energia += buffer[i]*buffer[i]/24;
   return nv_energia;
-}
+} */
 
  void puertoExcitaFilaLeds(void){
+	 
 
-  UWORD led[9]={0x0000,0x0100,0x0300,0x0700,0x0F00,0x1F00,0x3F00,0x7F00,0xFF00};
-  int i;
-//  UWORD var = 0;
-    UWORD valor = 1;
-
-    UWORD valor_previo = 1;
+	UWORD led[9]={0x0000,0x0100,0x0300,0x0700,0x0F00,0x1F00,0x3F00,0x7F00,0xFF00};
+	int i;
+//	UWORD var = 0;  
+    	UWORD valor = 1; 
+	UWORD valor_previo = 1;
  // Valor a escribir en el puerto de salida
-  UINT retVal = 3000; // Retardo introducido en microsegundos. (aprox. 3ms)// Desplazamiento del bit hacia la izquierda
-  int nivelEnergia;
-  nivelEnergia = calcula_energia(leerADC());
-  for(i=0; i< 9; i++){
-  if(nivelEnergia<nEnergias[i]){
-  puerto_S = puerto_S & 0x00FF;
-  set16_puertoS(led[i]|puerto_S);
-  }
-  if(nivelEnergia>=nEnergias[7]){
-  puerto_S = puerto_S & 0x00FF;
-      set16_puertoS(led[8] | puerto_S);
-     }
+ 	UINT retVal = 3000; // Retardo introducido en microsegundos. (aprox. 3ms)
+ 	int nivelEnergia;
+
+ 
+
+			valor = fila_ilum <<4;
+			puerto_S= puerto_S & 0xFF0F;
+			puerto_S= valor | puerto_S;
+			nivelEnergia=0;
+			
+			for(i=1; i < 8; i++)
+			 {
+			   if( ( nEnergias[i-1] < nv_energia) && (nv_energia <= nEnergias[i]) )
+			      {
+					nivelEnergia=i;
+					break;
+			      }
+			  }
+			
+			if(nv_energia > nEnergias[8])
+			  nivelEnergia = 8;
+				
+			
+		puerto_S = puerto_S & 0x00FF;
+		puerto_S = puerto_S | led[nivelEnergia] | valor;
+		set16_puertoS(puerto_S);
+
+	
+		
+	
+
 }
-
-  for(valor = 0x0000; valor < 0x0070; valor = valor + 16){
-    retardo(retVal);
-  puerto_S= puerto_S & 0xFF0F;
-        set16_puertoS(valor | puerto_S);
-  }
-  // Desplazamiento del bit hacia la derecha
-  for(valor = 0x0060; valor<= 0x0000; valor = valor - 16){
-    retardo(retVal);
-  puerto_S= puerto_S & 0xFF0F;
-        set16_puertoS(valor | puerto_S);
-
-}
- }
-
-
-
+	
+	
+	
 
 void rutina_int1(void){
 }
@@ -341,7 +381,6 @@ void rutina_tout2(void){
 }
 
 void rutina_tout3(void){
-}
-
+} 
 
 
