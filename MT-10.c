@@ -179,61 +179,61 @@
   }
 
 
-  //------------------------------------------------------
-  // void rutina_tout0(void)
+  // ===============
+  // Rutina de atención con una frecuencia de 8Khz
   //
   // Descripción:
   // Función de atención a la interrupción para TIMER0
   // Si se ha empezado a filtrar llama a la función filtrado con cada interrupción
-  //------------------------------------------------------
-  void rutina_tout0(void)
-  {
-
+  // Igual para la ecualización
+  // A su vez calcula el nv de energía y lo saca por el vúmetro cada 3ms
+  // ================
+  void rutina_tout0(void){
     int tension;
     int energia;
+
     mbar_writeShort(MCFSIM_TER0,BORRA_REF); // Reset del bit de fin de cuent
     if( estadoFiltrado == 1){
       tension = filtrado(leerADC());
       DAC_dato(tension + 0x800);
-    if(fila_ilum == filtro)
-   nv_energia+= tension * tension;    }
+      if(fila_ilum == filtro)
+        nv_energia+= tension * tension;
+    }
+
     else if (estadoFiltrado == 2){
       tension = filtradoMultiple();
       DAC_dato (tension + 0x800 );
     }
 
-  if(contador<24)
-  {
+  if(contador<24){
     contador++;
-
   }
-  if (contador >= 24)
-  {
-
+  if (contador >= 24){ // cada 3 ms se ejecuta este bloque
     puertoExcitaFilaLeds();
+
     nv_energia=0;
     contador =0;
-    if(fila_ilum<7){
-    fila_ilum++;
-    }
-    if(fila_ilum==7){
-    fila_ilum=0;
-    }
 
-  }
+    if(fila_ilum<7)
+      fila_ilum++;
+
+    if(fila_ilum==7)
+      fila_ilum=0;
+    }
   }
 
-  //------------------------------------------------------
-  // void initInt(void)
+  // ===========
+  // Inicializa los registros para la interrupción del timer 0
   //
   // Descripción:
   // Función por defecto de inicialización de la interrupción del timer 0
-  //------------------------------------------------------
-  void initInt()
-  {
+  // =============
+  void initInt(){
     mbar_writeByte(MCFSIM_PIVR,V_BASE); // Fija comienzo de vectores de interrupción en V_BASE.
     ACCESO_A_MEMORIA_LONG(DIR_VTMR0)= (ULONG)_prep_TOUT0; // Escribimos la dirección de la función para TMR0
+
     output("COMIENZA EL PROGRAMA\r\n");
+
     mbar_writeShort(MCFSIM_TMR0, (PRESCALADO-1)<<8|0x3D); // TMR0: PS=1-1=0 CE=00 OM=1 ORI=1 FRR=1 CLK=10 RST=1
     mbar_writeShort(MCFSIM_TCN0, 0x0000); // Ponemos a 0 el contador del TIMER0
     mbar_writeShort(MCFSIM_TRR0, CNT_INT1); // Fijamos la cuenta final del contador
@@ -242,107 +242,100 @@
   }
 
 
-  //lee un dato del ADC y devuelve la tensión
+  // =============
+  // lee un dato del ADC, le aplica la máscara para la extensión de signo y devuelve la lectura
+  // =============
   int leerADC(){
-  int lectura;
-   lectura = ADC_dato();
-  if(lectura & 0x00000800)
-  lectura = lectura | 0xFFFFF000;
-  return lectura;
+    int lectura;
+    lectura = ADC_dato();
+    if(lectura & 0x00000800)
+      lectura = lectura | 0xFFFFF000;
+
+    return lectura;
   }
 
 
-  //dada una tensión de entrada saca por el DAC la tensión de salida filtrada
-
+  // =============
+  // recibe una tensión de entrada, y según el filtro en el que se encuentre el sistema
+  // aplica el sistema de la documentación
+  // =============
   int filtrado(int tension_ent){
+    int salida;
+    int aux;
+    static int a [2][7] = {{-2029, -2011, -1970, -1878, -1660, -1115, 141} , {1006, 988, 955, 890, 772, 569, 239}};
 
-  int salida;
-  int aux;
-  static int a [2][7] = {{-2029, -2011, -1970, -1878, -1660, -1115, 141} , {1006, 988, 955, 890, 772, 569, 239}};
+    aux = historia[0][filtro];
 
-  aux = historia[0][filtro];
+    salida = B0 * tension_ent -a[0][filtro] * historia[0][filtro] -a[1][filtro] * historia[1][filtro];
+    historia[0][filtro] = salida >> 10;
 
-  salida = B0*tension_ent -a[0][filtro]* historia[0][filtro] -a[1][filtro]*historia[1][filtro];
-  historia[0][filtro] = salida >> 10;
+    salida += B1 * historia[0][filtro] + historia[1][filtro] * B2;
+    historia[1][filtro] = aux;
 
-  salida += B1* historia[0][filtro] + historia[1][filtro]*B2;
-  historia[1][filtro] = aux;
-
-  salida = salida >> 10;
-  salida = salida * filtros[filtro].ganancia;
-  salida = salida >> 10;
-  return salida;
+    salida = salida >> 10;
+    salida = salida * filtros[filtro].ganancia;
+    salida = salida >> 10;
+    return salida;
   }
 
+
+  // =============
+  // llama a la función filtrado para cada filtro, y suma sus salidas según la ganancia seleccionada mediante
+  // la interfaz. Además gestiona la salida del nv de energía por el vúmetro
+  // =============
   int filtradoMultiple () {
     int output;
     int i;
-  int salida_unica;
+    int salida_unica;
     int tension;
     int ganancia_energia [9] = {1024, 610, 364, 217, 129, 77, 46, 27, 21};
 
     output = 0;
     tension = leerADC();
     for(i=0; i<7 ;i++){
-     filtro =i;
-  salida_unica =  (filtrado(tension) * ganancia_energia[nv[i]]) >> 10;
-     output += salida_unica;
-  if(i==fila_ilum){
-   nv_energia+= salida_unica*salida_unica;
+      filtro = i;
 
-  }
-   }
+      salida_unica =  (filtrado(tension) * ganancia_energia[nv[i]]) >> 10;
+      output += salida_unica;
+
+      if(i==fila_ilum)
+        nv_energia += salida_unica*salida_unica;
+    }
 
     output = output >> 1;
-
     return output;
-
-
-  //puertoExcitaFilaLeds();
   }
 
 
-
-   void puertoExcitaFilaLeds(void){
-
-
-    UWORD led[9]={0x0000,0x0100,0x0300,0x0700,0x0F00,0x1F00,0x3F00,0x7F00,0xFF00};
+  // =============
+  //
+  // =============
+  void puertoExcitaFilaLeds(void){
+    static UWORD led[9]={0x0000,0x0100,0x0300,0x0700,0x0F00,0x1F00,0x3F00,0x7F00,0xFF00};
     int i;
-  //  UWORD var = 0;
-        UWORD valor = 1;
+    UWORD valor = 1;
     UWORD valor_previo = 1;
    // Valor a escribir en el puerto de salida
-    UINT retVal = 3000; // Retardo introducido en microsegundos. (aprox. 3ms)
+    static UINT retVal = 3000; // Retardo introducido en microsegundos. (aprox. 3ms)
     int nivelEnergia;
+    valor = fila_ilum <<4;
+    puerto_S= puerto_S & 0xFF0F;
+    puerto_S= valor | puerto_S;
+    nivelEnergia=0;
 
+    for(i=1; i < 8; i++){
+      if( ( nEnergias[i-1] < nv_energia) && (nv_energia <= nEnergias[i]) ){
+        nivelEnergia=i;
+        break;
+      }
+    }
 
+    if(nv_energia > nEnergias[8])
+      nivelEnergia = 8;
 
-        valor = fila_ilum <<4;
-        puerto_S= puerto_S & 0xFF0F;
-        puerto_S= valor | puerto_S;
-        nivelEnergia=0;
-
-        for(i=1; i < 8; i++)
-         {
-           if( ( nEnergias[i-1] < nv_energia) && (nv_energia <= nEnergias[i]) )
-              {
-            nivelEnergia=i;
-            break;
-              }
-          }
-
-        if(nv_energia > nEnergias[8])
-          nivelEnergia = 8;
-
-
-      puerto_S = puerto_S & 0x00FF;
-      puerto_S = puerto_S | led[nivelEnergia] | valor;
-      set16_puertoS(puerto_S);
-
-
-
-
-
+    puerto_S = puerto_S & 0x00FF;
+    puerto_S = puerto_S | led[nivelEnergia] | valor;
+    set16_puertoS(puerto_S);
   }
 
 

@@ -59,7 +59,6 @@ void GestionReverberacion(void);
 void swInit(void);
 void hwInit(void);
 void outputDAC(int *senal, int numMuestras);
-void iO (void);
 
 void rutina_tout0(void);
 void rutina_int1(void);
