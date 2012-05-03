@@ -189,18 +189,17 @@
   void rutina_tout0(void)
   {
 
-    int tension; //pendiente de modificar nombre
+    int tension;
     int energia;
     mbar_writeShort(MCFSIM_TER0,BORRA_REF); // Reset del bit de fin de cuent
     if( estadoFiltrado == 1){
       tension = filtrado(leerADC());
       DAC_dato(tension + 0x800);
-  //    energia = calcula_energia(tension);
-    }
+    if(fila_ilum == filtro)
+   nv_energia+= tension * tension;    }
     else if (estadoFiltrado == 2){
       tension = filtradoMultiple();
       DAC_dato (tension + 0x800 );
-      //energia = calcula_energia(tension);
     }
 
   if(contador<24)
