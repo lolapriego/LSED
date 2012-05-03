@@ -18,7 +18,6 @@
 #define BORRA_REF 0x0002 // Valor de borrado de interr. pendientes de tout1 para TER0
 
 #define NUM_FILT 7
-#define NUM_FILT 7
 #define V_MAX 5
 #define FONDO_ESCALA 0xFFF
 
