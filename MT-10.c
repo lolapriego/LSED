@@ -1,13 +1,11 @@
 #include "MT-10.h"
+#include "bufferCircular.c"
+
 
   int fila_ilum;
   int nv_energia;
   int contador;
 
-  int retardo_reverberacion;
-  int atenuacion_reverberacion;
-
-  int bufferCircular(int);
 
   // ===================
   // Funcion bucleMain
@@ -205,7 +203,9 @@
   // ================
   void rutina_tout0(void){
     int tension;
-    int energia;
+    static int buffer [7200];
+    static int * prueba = buffer;
+
 
     mbar_writeShort(MCFSIM_TER0,BORRA_REF); // Reset del bit de fin de cuent
     if( estado == 1){
@@ -220,8 +220,9 @@
       DAC_dato (tension + 0x800 );
     }
     else if (estado == 3){
+
       tension = leerADC();
-      DAC_dato( bufferCircular(tension) + tension + 0x800);
+      DAC_dato( bufferCircular(tension, prueba, buffer) + tension + 0x800);
     }
 
   if(contador<24){
@@ -361,24 +362,6 @@
   }
 
 
-  // =============
-  // lee un dato del ADC lo almacena en un buffer, lo suma y lo devuelve
-  // =============
-  int bufferCircular (int tension) {
-    static int buffer[retardo_reverberacion];
-    static int * muestra = buffer;
-
-    if( muestra < buffer + retardo_reverberacion){
-      * muestra = tension / atenuacion_reverberacion;
-      muestra ++;
-    }
-    else{
-      muestra = buffer;
-      *muestra = tension / atenuacion_reverberacion;
-    }
-
-    return buffer[retardo_reverberacion -1];
-  }
 
 
   void rutina_int1(void){
