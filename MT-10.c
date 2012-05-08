@@ -204,7 +204,8 @@
   void rutina_tout0(void){
     int tension;
     static int buffer [7200];
-    static int * prueba = buffer;
+    static int salida = 0;
+    
 
 
     mbar_writeShort(MCFSIM_TER0,BORRA_REF); // Reset del bit de fin de cuent
@@ -220,9 +221,9 @@
       DAC_dato (tension + 0x800 );
     }
     else if (estado == 3){
-
-      tension = leerADC();
-      DAC_dato( bufferCircular(tension, prueba, buffer) + tension + 0x800);
+      tension = bufferCircular(salida, buffer);
+      salida = tension + leerADC();
+      DAC_dato( salida + 0x800);
     }
 
   if(contador<24){
