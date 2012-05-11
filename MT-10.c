@@ -1,10 +1,56 @@
-#include "MT-10.h"
-#include "bufferCircular.c"
+#include "m5272lib.c"
+#include "m5272lcd.c"
+#include "printf.c"
+#include "m5272adc_dac.c"
+#include "teclado.c"
+#include "m5272.h"
 
+#include "MT-10.h"
+
+#include "bufferCircular.c"
+#include "gestion.c"
+#include "rutinas.c"
+#include "leerADC.c"
+#include "filtrar.c"
+
+#define V_BASE 0x40 // Direcci�n de inicio de los vectores de interrupci�n
+#define DIR_VTMR0 4*(V_BASE+5) // Direcci�n del vector de TMR0
+
+#define FREC_INT 8000 // Frec. de interr. TMR0 = 8000 Hz
+#define PRESCALADO 2
+#define CNT_INT1 MCF_CLK/(FREC_INT*PRESCALADO*16) // Valor de precarga del temporizador de interrupciones TRR0
+#if CNT_INT1>0xFFFF
+#error PRESCALADO demasiado peque�o para esa frecuencia (CNT_INT1>0xFFFF)
+#endif
+#define BORRA_REF 0x0002 // Valor de borrado de interr. pendientes de tout1 para TER0
+
+#define V_MAX 5
+#define FONDO_ESCALA 0xFFF
+
+
+  typedef struct {
+    WORD variableAux;
+  } TpuertoSalida;
+  TpuertoSalida puerto;
 
   int fila_ilum;
   int nv_energia;
   int contador;
+
+
+  int nv[7];
+  int historia[2][7];
+  int estado; //variable global que marca el estado del sistema para filtrar
+  int filtro; //variable global que marca el filtro seleccionado en el sistema
+  int nEnergias [9] = {200,559,1567,4386,12280, 34374,96223,269354, 753992};
+  int estadoMuestra;
+  int retardo_reverberacion;
+  int atenuacion_reverberacion;
+
+  void initInt(void);
+
+  void swInit(void);
+  void hwInit(void);
 
 
   // ===================
@@ -36,78 +82,6 @@
   }
 
 
-  // ===========
-  // Gestion Caracterizacion
-  // ===========
-  void GestionCaracterizacion(){
-    char opcion;
-
-    printf("Seleccione el filtro que desea caracterizar u 8 para volver al menu inicio\n");
-
-    opcion=teclado();
-    if(opcion=='8')
-      return;
-    filtro= opcion - '0' -1;
-    printf("Ha seleccionado el filtro: %d\n",filtro +1);
-
-    estado = 1;
-  }
-
-
-  // ========
-  // GestionEcualizazion
-  // ========
-   void GestionEcualizacion(){
-    char opcion;
-    int banda;
-    char nivel;
-    estado = 2;
-
-    do{
-      printf("\nBANDA:     32Hz   64Hz   125Hz   250Hz   500Hz   1kHz   2kHz\n");
-      printf("Ganancia:  %d   %d   %d    %d    %d    %d   %d\n", filtros[0].gain, filtros[1].gain, filtros[2].gain, filtros[3].gain, filtros[4].gain, filtros[5].gain, filtros[6].gain);
-      printf("(Nivel)      %d      %d      %d       %d       %d       %d       %d\n", nv[0], nv[1], nv[2], nv[3], nv[4], nv[5], nv[6]);
-      printf("Seleccione la banda de la que desea modificar su nv de energia o pulse %d o %d para salir\n",8,9);
-
-      opcion = teclado();
-      if (opcion == '8' || opcion == '9')
-        break;
-
-      while(opcion <'1' || opcion>'7'){
-        printf("Por favor seleccione una banda correcta, de %d a %d\n",1,7);
-        opcion = teclado();
-      }
-
-      banda = opcion - '0' -1;
-
-      do{ //con este bucle una vez seleccionada una banda permite modificarla hasta seleccionar la tecla 5
-        printf("Seleccione %d o %d para modificar el nv de energia de la banda %d, o %d para terminar\n", 8,9, banda +1, 5);
-        nivel = teclado();
-        if (nivel == '8' && nv[banda] != 0)
-          nv[banda]--;
-        else if (nivel =='9' && nv[banda] != 8)
-          nv[banda]++;
-        else
-          printf("Error, pulse la tecla adecuada la proxima vez");
-      } while(nivel != '5');
-
-    } while (opcion != '8');
-  }
-
-
-  // ==============
-  // GestionReverberacion
-  // ==============
-  void GestionReverberacion(){
-
-    printf ("\nSeleccione la atenuación para el efecto reverberación\n");
-    atenuacion_reverberacion = teclado() - '0';
-
-    printf("\nSeleccione un retardo en escala de x100 milisegundos para el efecto reverberacion\n");
-    retardo_reverberacion = (teclado() - '0') * 800; // pasamos la tecla seleccionada al número de interrupciones necesarias
-
-    estado = 3;
-  }
 
 
   // ==============
@@ -129,41 +103,6 @@
     for(i=0; i<7; i++){
       nv[i] = 0;
     }
-
-    filtros[0].banda=32; // no habría que inicializarlo aquí, no variables globale son constantes!!
-    filtros[0].ganancia=8;
-    filtros[0].nv=0;
-    filtros[0].gain = 1024;
-
-    filtros[1].banda=64;
-    filtros[1].ganancia=17;
-    filtros[1].nv=0;
-    filtros[1].gain = 1024;
-
-    filtros[2].banda=125;
-    filtros[2].ganancia=34;
-    filtros[2].nv=0;
-    filtros[2].gain = 1024;
-
-    filtros[3].banda=250;
-    filtros[3].ganancia=66;
-    filtros[3].nv=0;
-    filtros[3].gain = 1024;
-
-    filtros[4].banda=500;
-    filtros[4].ganancia=125;
-    filtros[4].nv=0;
-    filtros[4].gain = 1024;
-
-    filtros[5].banda=1000;
-    filtros[5].ganancia=227;
-    filtros[5].nv=0;
-    filtros[5].gain = 1024;
-
-    filtros[6].banda=2000;
-    filtros[6].ganancia=392;
-    filtros[6].nv=0;
-    filtros[6].gain = 1024;
 
     estado=0;
     filtro=0; //filtro por defecto
@@ -192,57 +131,6 @@
   }
 
 
-  // ===============
-  // Rutina de atención con una frecuencia de 8Khz
-  //
-  // Descripción:
-  // Función de atención a la interrupción para TIMER0
-  // Si se ha empezado a filtrar llama a la función filtrado con cada interrupción
-  // Igual para la ecualización
-  // A su vez calcula el nv de energía y lo saca por el vúmetro cada 3ms
-  // ================
-  void rutina_tout0(void){
-    int tension;
-    static int buffer [7200];
-    static int salida = 0;
-    
-
-
-    mbar_writeShort(MCFSIM_TER0,BORRA_REF); // Reset del bit de fin de cuent
-    if( estado == 1){
-      tension = filtrado(leerADC());
-      DAC_dato(tension + 0x800);
-      if(fila_ilum == filtro)
-        nv_energia+= tension * tension;
-    }
-
-    else if (estado == 2){
-      tension = filtradoMultiple();
-      DAC_dato (tension + 0x800 );
-    }
-    else if (estado == 3){
-      tension = bufferCircular(salida, buffer);
-      salida = tension + leerADC();
-      DAC_dato( salida + 0x800);
-    }
-
-  if(contador<24){
-    contador++;
-  }
-  if (contador >= 24){ // cada 3 ms se ejecuta este bloque
-    puertoExcitaFilaLeds();
-
-    nv_energia=0;
-    contador =0;
-
-    if(fila_ilum<7)
-      fila_ilum++;
-
-    if(fila_ilum==7)
-      fila_ilum=0;
-    }
-  }
-
   // ===========
   // Inicializa los registros para la interrupción del timer 0
   //
@@ -261,75 +149,6 @@
     mbar_writeLong(MCFSIM_ICR1, 0x8888C888); // Marca la interrupción del TIMER0 como no pendiente
     sti(); // Habilitamos interrupciones
   }
-
-
-  // =============
-  // lee un dato del ADC, le aplica la máscara para la extensión de signo y devuelve la lectura
-  // =============
-  int leerADC(){
-    int lectura;
-    lectura = ADC_dato();
-    if(lectura & 0x00000800)
-      lectura = lectura | 0xFFFFF000;
-
-    return lectura;
-  }
-
-
-  // =============
-  // recibe una tensión de entrada, y según el filtro en el que se encuentre el sistema
-  // aplica el sistema de la documentación
-  // =============
-  int filtrado(int tension_ent){
-    static int a [2][7] = {{-2029, -2011, -1970, -1878, -1660, -1115, 141} , {1006, 988, 955, 890, 772, 569, 239}};
-    static int B0 = 1024;
-    static int B1 = 0;
-    static int B2 = -1024;
-    int salida;
-    int aux;
-
-    aux = historia[0][filtro];
-
-    salida = B0 * tension_ent -a[0][filtro] * historia[0][filtro] -a[1][filtro] * historia[1][filtro];
-    historia[0][filtro] = salida >> 10;
-
-    salida += B1 * historia[0][filtro] + historia[1][filtro] * B2;
-    historia[1][filtro] = aux;
-
-    salida = salida >> 10;
-    salida = salida * filtros[filtro].ganancia;
-    salida = salida >> 10;
-    return salida;
-  }
-
-
-  // =============
-  // llama a la función filtrado para cada filtro, y suma sus salidas según la ganancia seleccionada mediante
-  // la interfaz. Además gestiona la salida del nv de energía por el vúmetro
-  // =============
-  int filtradoMultiple () {
-    int output;
-    int i;
-    int salida_unica;
-    int tension;
-    int ganancia_energia [9] = {1024, 610, 364, 217, 129, 77, 46, 27, 21};
-
-    output = 0;
-    tension = leerADC();
-    for(i=0; i<7 ;i++){
-      filtro = i;
-
-      salida_unica =  (filtrado(tension) * ganancia_energia[nv[i]]) >> 10;
-      output += salida_unica;
-
-      if(i==fila_ilum)
-        nv_energia += salida_unica*salida_unica;
-    }
-
-    output = output >> 1;
-    return output;
-  }
-
 
   // =============
   //
@@ -364,26 +183,5 @@
 
 
 
-
-  void rutina_int1(void){
-  }
-
-  void rutina_int2(void){
-  }
-
-  void rutina_int3(void){
-  }
-
-  void rutina_int4(void){
-  }
-
-  void rutina_tout1(void){
-  }
-
-  void rutina_tout2(void){
-  }
-
-  void rutina_tout3(void){
-  }
 
 
