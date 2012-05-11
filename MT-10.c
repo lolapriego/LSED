@@ -22,10 +22,8 @@
 #if CNT_INT1>0xFFFF
 #error PRESCALADO demasiado peque�o para esa frecuencia (CNT_INT1>0xFFFF)
 #endif
-#define BORRA_REF 0x0002 // Valor de borrado de interr. pendientes de tout1 para TER0
 
 #define V_MAX 5
-#define FONDO_ESCALA 0xFFF
 
 
   typedef struct {

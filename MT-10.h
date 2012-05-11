@@ -8,6 +8,7 @@ extern int historia[2][7];
 
 extern int fila_ilum;
 extern int nv_energia;
+extern int contador;
 
 int leerADC(void);
 void DAC_dato(int dato);

@@ -1,5 +1,7 @@
 #include "MT-10.h"
 
+#define BORRA_REF 0x0002 // Valor de borrado de interr. pendientes de tout1 para TER0
+
   // ===============
   // Rutina de atención con una frecuencia de 8Khz
   //
