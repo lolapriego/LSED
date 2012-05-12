@@ -25,23 +25,17 @@
 
 #define V_MAX 5
 
-
-  typedef struct {
-    WORD variableAux;
-  } TpuertoSalida;
-  TpuertoSalida puerto;
-
   int fila_ilum;
-  int nv_energia;
-  int contador;
+  int nv_energia; //marca el nv de energía de la señal a sacar por el vúmetro
 
 
-  int nv[7];
-  int historia[2][7];
+  int nv[7]; //marca el nv de energía seleccionado en ecualización
   int estado; //variable global que marca el estado del sistema para filtrar
   int filtro; //variable global que marca el filtro seleccionado en el sistema
+
   int nEnergias [9] = {200,559,1567,4386,12280, 34374,96223,269354, 753992};
   int estadoMuestra;
+
   int retardo_reverberacion;
   int atenuacion_reverberacion;
 
@@ -96,7 +90,6 @@
   // ==============
   void swInit(){
     int i;
-    int j;
 
     for(i=0; i<7; i++){
       nv[i] = 0;
@@ -105,15 +98,10 @@
     estado=0;
     filtro=0; //filtro por defecto
 
-    for(i=0; i<2 ;i++)
-      for(j = 0; j < 7; j++)
-        historia[i][j] = 0;
-
     estadoMuestra=0;
 
     fila_ilum = 0;
     nv_energia = 0;
-    contador = 0;
 
     retardo_reverberacion = 0;
     atenuacion_reverberacion = 0;
@@ -154,8 +142,10 @@
   void puertoExcitaFilaLeds(void){
     static UWORD led[9]={0x0000,0x0100,0x0300,0x0700,0x0F00,0x1F00,0x3F00,0x7F00,0xFF00};
     int i;
+
     UWORD valor = 1;
     UWORD valor_previo = 1;
+
    // Valor a escribir en el puerto de salida
     static UINT retVal = 3000; // Retardo introducido en microsegundos. (aprox. 3ms)
     int nivelEnergia;

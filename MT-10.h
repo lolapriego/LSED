@@ -4,11 +4,9 @@ extern int atenuacion_reverberacion;
 
 extern int filtro;
 extern int estado;
-extern int historia[2][7];
 
 extern int fila_ilum;
 extern int nv_energia;
-extern int contador;
 
 int leerADC(void);
 void DAC_dato(int dato);
