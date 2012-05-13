@@ -12,6 +12,7 @@
 #include "rutinas.c"
 #include "leerADC.c"
 #include "filtrar.c"
+#include "gestionAvanzada.c"
 
 #define V_BASE 0x40 // Direcci�n de inicio de los vectores de interrupci�n
 #define DIR_VTMR0 4*(V_BASE+5) // Direcci�n del vector de TMR0
@@ -79,8 +80,8 @@
                 GestionReverberacion();
                 break;
 
-      case '4': printf("Gestion de parametros de Reverberacion\n");
-                GestionAvanzadaReverberacion();
+      case '4': printf("Gestion Avanzada de parametros\n");
+                GestionAvanzada();
                 break;
 
       default: output("Tecla no valida\n");

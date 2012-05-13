@@ -18,4 +18,5 @@ int bufferCircular (int tension, int *buffer);
 int filtrado(int tension); //pendiente de hacer una sola matriz historial
 char teclado(void);
 int ADC_dato(void);
+void GestionReverberacion(void);
 
