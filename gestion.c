@@ -27,7 +27,7 @@
     int banda;
     char nivel;
 
-    static int ganancia_energia [9] = {1024, 610, 364, 217, 129, 77, 46, 27, 21};
+    static int ganancia_energia [16] = {1024, 790, 610, 471, 364, 281, 217, 167, 129, 99, 77, 59, 46, 35, 27, 21};
 
     estado = 2;
 
@@ -35,8 +35,8 @@
       printf("\nBANDA:     32Hz   64Hz   125Hz   250Hz   500Hz   1kHz   2kHz\n");
       printf("Ganancia:  %d   %d   %d    %d    %d    %d   %d\n", ganancia_energia[nv[0]], ganancia_energia[nv[1]],
         ganancia_energia[nv[2]], ganancia_energia[nv[3]], ganancia_energia[nv[4]], ganancia_energia[nv[5]], ganancia_energia[nv[6]]);
-      printf("(Nivel)      %d      %d      %d       %d       %d       %d       %d\n", nv[0], nv[1], nv[2], nv[3], nv[4], nv[5], nv[6]);
-      printf("Seleccione la banda de la que desea modificar su nv de energia o pulse %d o %d para salir\n",8,9);
+      printf("====\nNivel)      %d      %d      %d       %d       %d       %d       %d\n", nv[0], nv[1], nv[2], nv[3], nv[4], nv[5], nv[6]);
+      printf("\nSeleccione la banda de la que desea modificar su nv de energia\n\n o pulse %d o %d para salir\n",8,9);
 
       opcion = teclado();
       if (opcion == '8' || opcion == '9')
@@ -50,11 +50,11 @@
       banda = opcion - '0' -1;
 
       do{ //con este bucle una vez seleccionada una banda permite modificarla hasta seleccionar la tecla 5
-        printf("Seleccione %d o %d para modificar el nv de energia de la banda %d, o %d para terminar\n", 8,9, banda +1, 5);
+        printf("Seleccione %d o %d para modificar el nv de energia de la banda %d,\n===\n o %d para terminar\n", 8,9, banda +1, 5);
         nivel = teclado();
         if (nivel == '8' && nv[banda] != 0)
           nv[banda]--;
-        else if (nivel =='9' && nv[banda] != 8)
+        else if (nivel =='9' && nv[banda] != 15)
           nv[banda]++;
         else
           printf("Error, pulse la tecla adecuada la proxima vez");

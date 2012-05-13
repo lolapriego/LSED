@@ -39,7 +39,7 @@
     int i;
     int salida_unica;
     int tension;
-    static int ganancia_energia [9] = {1024, 610, 364, 217, 129, 77, 46, 27, 21};
+    static int ganancia_energia [16] = {1024, 790, 610, 471, 364, 281, 217, 167, 129, 99, 77, 59, 46, 35, 27, 21};
 
     output = 0;
     tension = leerADC();

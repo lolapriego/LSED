@@ -62,13 +62,14 @@
       atenuaciones[parametros] = atenuacion_reverberacion;
       retardos[parametros] = retardo_reverberacion;
 
+      estado = 3;
       parametros ++;
     }
 
   }
 
   void GestionAvanzadaEcualizacion(){
-    static int ecualizaciones[9][7] = {{},{},{},{},{},{},{},{},{}}; //TODO crear pre-sets de ecualizacion con sentido
+    static int ecualizaciones[9][7] = {{0,1,2,3,4,5,6},{0,15,0,15,0,15,0},{15,13,11,9,7,5,0},{0,0,0,0,0,0,0},{0,0,0,0,0,0,0},{0,0,0,0,0,0,0},{0,0,0,0,0,0,0},{0,0,0,0,0,0,0},{0,0,0,0,0,0,0}};
     static int parametros = 3;
 
     int i;
@@ -97,10 +98,17 @@
     }
 
     else if(opcion == 21 && parametros < 9){
-      //TODO crear nuevo nv de ecualizacion
-      ecualizaciones[parametros] = //creado
+      printf("=====\nIntroduzca un nuevo parametro de ecualizacion, pulse de forma pausa el nivel para las distintas bandas de frecuencia\n");
+      for(i = 0;i < 7; i++){
+        printf("Nivel para la banda del filtro%d\n", i + 1);
+        do{
+          opcion = teclado() - '0';
+        } while(opcion< 0 || opcion > 9);
+        ecualizaciones[parametros][i] = opcion;
+      }
       nv = ecualizaciones[parametros];
 
+      estado = 2;
       parametros ++;
     }
   }
