@@ -1,0 +1,1154 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"para",
+				"parametros"
+			],
+			[
+				"reta",
+				"retardo_reverberacion"
+			],
+			[
+				"re",
+				"retardos"
+			],
+			[
+				"gestion",
+				"GestionReverberacion"
+			],
+			[
+				"retar",
+				"retardos"
+			],
+			[
+				"atenuacion",
+				"atenuaciones"
+			],
+			[
+				"atenu",
+				"atenuacion_reverberacion"
+			],
+			[
+				"ate",
+				"atenuacion_reverberacion"
+			],
+			[
+				"random",
+				"random_string"
+			],
+			[
+				"rand",
+				"random_string"
+			],
+			[
+				"Validatio",
+				"ValidationKey"
+			],
+			[
+				"user",
+				"user_test"
+			],
+			[
+				"VALIDATION",
+				"validation_key"
+			],
+			[
+				"fla",
+				"flag"
+			],
+			[
+				"model",
+				"models_users"
+			],
+			[
+				"add",
+				"add_column"
+			],
+			[
+				"e",
+				"e"
+			],
+			[
+				"validation",
+				"validation_key"
+			],
+			[
+				"sin",
+				"sign_up"
+			],
+			[
+				"bus",
+				"business_name"
+			],
+			[
+				"_cre",
+				"_creativity_css_a4"
+			],
+			[
+				"cr",
+				"_creativity_css_a4"
+			],
+			[
+				"pdf",
+				"pdf_format"
+			],
+			[
+				"ba",
+				"bad"
+			],
+			[
+				"back",
+				"background-color"
+			],
+			[
+				"font-",
+				"font-family"
+			],
+			[
+				"logo",
+				"logo_url"
+			],
+			[
+				"Docrap",
+				"Docraptor"
+			],
+			[
+				"res",
+				"responses"
+			],
+			[
+				"opini",
+				"opinión"
+			],
+			[
+				"pass",
+				"password_not_match"
+			],
+			[
+				"opinion",
+				"opinion_point"
+			],
+			[
+				"create",
+				"create_business"
+			],
+			[
+				"op",
+				"option	Tag"
+			],
+			[
+				"la",
+				"layout"
+			],
+			[
+				"form",
+				"form_fields"
+			],
+			[
+				"fiel",
+				"field_name"
+			],
+			[
+				"field",
+				"field_name"
+			],
+			[
+				"pa",
+				"path_info"
+			],
+			[
+				"opi",
+				"opinion_one"
+			],
+			[
+				"Mo",
+				"Models"
+			],
+			[
+				"new",
+				"new"
+			],
+			[
+				"up",
+				"updated_at"
+			],
+			[
+				"Op",
+				"Opinion"
+			],
+			[
+				"emtrics",
+				"emtrics_index"
+			],
+			[
+				"op_two",
+				"op_two"
+			],
+			[
+				"questio",
+				"question_one"
+			],
+			[
+				"ass",
+				"assert"
+			],
+			[
+				"total",
+				"total_opinions"
+			],
+			[
+				"emtri",
+				"emtrics_index"
+			],
+			[
+				"em",
+				"emtrics_index"
+			],
+			[
+				"o",
+				"ordinal"
+			],
+			[
+				"per",
+				"percentage_responses_for_question"
+			],
+			[
+				"to",
+				"to_s"
+			],
+			[
+				"good",
+				"good"
+			],
+			[
+				"ne",
+				"neutral"
+			],
+			[
+				"OPin",
+				"OpinionPoint"
+			],
+			[
+				"new_",
+				"new_opinion"
+			],
+			[
+				"new_op",
+				"new_opinion_point"
+			],
+			[
+				"busi",
+				"business_id"
+			],
+			[
+				"ques",
+				"question_three"
+			],
+			[
+				"que",
+				"question_two"
+			],
+			[
+				"asser",
+				"assert_equal"
+			],
+			[
+				"get",
+				"get_from_short_id"
+			],
+			[
+				"assert",
+				"assert_equal"
+			],
+			[
+				"use",
+				"user_op"
+			],
+			[
+				"op_",
+				"op_two"
+			],
+			[
+				"busine",
+				"business_two"
+			],
+			[
+				"business",
+				"business_one"
+			],
+			[
+				"user_admin",
+				"user_admin_one"
+			],
+			[
+				"user_a",
+				"user_admin_two"
+			],
+			[
+				"all",
+				"all_for_user"
+			],
+			[
+				"test_bus",
+				"test_business_one"
+			],
+			[
+				"view_op",
+				"view_opinion_point"
+			],
+			[
+				"first",
+				"first_admin"
+			],
+			[
+				"mo",
+				"modify_table"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"contents": "Searching 31 files for \"valor_previo\"\n\n/Users/lolapriego/Escuela/LSSEDD/MT-10.c:\n  165      int i;\n  166      UWORD valor = 1;\n  167:     UWORD valor_previo = 1;\n  168     // Valor a escribir en el puerto de salida\n  169      static UINT retVal = 3000; // Retardo introducido en microsegundos. (aprox. 3ms)\n\n1 match in 1 file\n\n\nSearching 23 files for \"valor_previo\"\n\n/Users/lolapriego/Escuela/LSSEDD/outputVumetro.c:\n   12  \n   13      UWORD valor = 1;\n   14:     UWORD valor_previo = 1;\n   15  \n   16     // Valor a escribir en el puerto de salida\n\n1 match in 1 file\n",
+			"settings":
+			{
+				"buffer_size": 568,
+				"line_ending": "Unix",
+				"name": "Find Results",
+				"scratch": true
+			}
+		},
+		{
+			"file": "outputVumetro.c",
+			"settings":
+			{
+				"buffer_size": 832,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "MT-10.c",
+			"settings":
+			{
+				"buffer_size": 3431,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "gestion.c",
+			"settings":
+			{
+				"buffer_size": 2513,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "m5272lib.c",
+			"settings":
+			{
+				"buffer_size": 7576,
+				"line_ending": "Windows"
+			}
+		}
+	],
+	"build_system": "",
+	"command_palette":
+	{
+		"height": 392.0,
+		"selected_items":
+		[
+			[
+				"rei",
+				"Indentation: Reindent Lines"
+			]
+		],
+		"width": 530.0
+	},
+	"console":
+	{
+		"height": 125.0
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/Users/lolapriego/Escuela/LSSEDD/MT-10.c",
+		"/Users/lolapriego/Escuela/LSSEDD/filtrar.c",
+		"/Users/lolapriego/Escuela/LSSEDD/MT-10.h",
+		"/Users/lolapriego/Escuela/LSSEDD/gestion.c",
+		"/Users/lolapriego/Escuela/LSSEDD/gestionAvanzada.c",
+		"/Users/lolapriego/emtrics/config/development.rb",
+		"/Users/lolapriego/emtrics/i18n/es.yml",
+		"/Users/lolapriego/emtrics/app/models/user.rb",
+		"/Users/lolapriego/emtrics/app/controllers/signup.rb",
+		"/Users/lolapriego/emtrics/tests/test_validation_key.rb",
+		"/Users/lolapriego/emtrics/app/models/validation_key.rb",
+		"/Users/lolapriego/emtrics/app/helpers/email.rb",
+		"/Users/lolapriego/emtrics/script/migration.rb",
+		"/Users/lolapriego/emtrics/app/models/url.rb",
+		"/Users/lolapriego/emtrics/i18n/en.yml",
+		"/Users/lolapriego/emtrics/app/views/account_verification.erb",
+		"/Users/lolapriego/emtrics/default.gems",
+		"/Users/lolapriego/emtrics/db/fixtures/prod/02_user.json",
+		"/Users/lolapriego/emtrics/app/backoffice.rb",
+		"/Users/lolapriego/emtrics/.git/COMMIT_EDITMSG",
+		"/Users/lolapriego/.bash_login",
+		"/Users/lolapriego/emtrics/app/views/login.erb",
+		"/Users/lolapriego/emtrics/app/controllers/login.rb",
+		"/Users/lolapriego/emtrics/tests/test_user.rb",
+		"/Users/lolapriego/emtrics/public/css/style.css",
+		"/Users/lolapriego/emtrics/pry_init.rb",
+		"/Users/lolapriego/emtrics/app/models/opinion_point_question.rb",
+		"/Users/lolapriego/emtrics/app/models/opinion_point.rb",
+		"/Users/lolapriego/emtrics/app/views/signup.erb",
+		"/Users/lolapriego/emtrics/app/views/public_layout.erb",
+		"/Users/lolapriego/emtrics/app/models/confirm_key.rb",
+		"/Users/lolapriego/emtrics/app/controllers/settings.rb",
+		"/Users/lolapriego/emtrics/config/common.rb",
+		"/Users/lolapriego/emtrics/app/frontoffice.rb",
+		"/Users/lolapriego/emtrics/public/css/boilerplate.css",
+		"/Users/lolapriego/emtrics/app/views/public_layout.haml",
+		"/Users/lolapriego/emtrics/app/controllers/users.rb",
+		"/Users/lolapriego/emtrics/app/models/business.rb",
+		"/Users/lolapriego/emtrics/app/controllers/dashboard.rb",
+		"/Users/lolapriego/emtrics/app/views/settings/edit.erb",
+		"/Users/lolapriego/emtrics/app/controllers/businesses.rb",
+		"/Users/lolapriego/emtrics/app/views/login.haml",
+		"/Users/lolapriego/emtrics/app/views/layout.erb",
+		"/Users/lolapriego/emtrics/app/views/register.haml",
+		"/Users/lolapriego/emtrics/config/README.txt",
+		"/Users/lolapriego/emtrics/config/production.rb",
+		"/Users/lolapriego/.bashrc",
+		"/Users/lolapriego/emtrics/app/views/nodata_dashboard.haml",
+		"/Users/lolapriego/emtrics/app/views/questions/index.erb",
+		"/Users/lolapriego/emtrics/app/views/questions/edit.erb",
+		"/Users/lolapriego/emtrics/app/controllers/questions.rb",
+		"/Users/lolapriego/emtrics/app/views/questions/index_op.erb",
+		"/Users/lolapriego/emtrics/app/views/response/view.haml",
+		"/Users/lolapriego/emtrics/app/views/questions/view.erb",
+		"/Users/lolapriego/emtrics/app/views/questions/new.erb",
+		"/Users/lolapriego/emtrics/app/views/dashboard.haml",
+		"/Users/lolapriego/emtrics/app/views/_ops_table.erb",
+		"/Users/lolapriego/emtrics/app/controllers/register.rb",
+		"/Users/lolapriego/emtrics/app/views/opinion_points/_question_table.haml",
+		"/Users/lolapriego/emtrics/app/helpers/menu.rb",
+		"/Users/lolapriego/emtrics/app/views/businesses/new.erb",
+		"/Users/lolapriego/emtrics/app/views/businesses/edit.erb",
+		"/Users/lolapriego/emtrics/app/views/opinion_points/edit.erb",
+		"/Users/lolapriego/emtrics/app/views/_metadata.erb",
+		"/Users/lolapriego/emtrics/app/views/business_categories/edit.erb",
+		"/Users/lolapriego/emtrics/app/views/businesses/index.erb",
+		"/Users/lolapriego/emtrics/app/views/opinion_points/index.erb",
+		"/Users/lolapriego/emtrics/app/views/_trend.erb",
+		"/Users/lolapriego/emtrics/app/views/_summary.erb",
+		"/Users/lolapriego/emtrics/app/views/_creativity_css_a4.erb",
+		"/Users/lolapriego/emtrics/app/controllers/opinion_points.rb",
+		"/Users/lolapriego/emtrics/app/views/creativity.erb",
+		"/Users/lolapriego/emtrics/app/views/_creativity_css_a8.erb",
+		"/Users/lolapriego/emtrics/app/controllers/opinions.rb",
+		"/Users/lolapriego/emtrics/app/controllers/run.rb",
+		"/Users/lolapriego/emtrics/app/controllers/tags.rb",
+		"/Users/lolapriego/emtrics/app/controllers/init.rb",
+		"/Users/lolapriego/emtrics/app/controllers/business_categories.rb",
+		"/Users/lolapriego/emtrics/app/helpers/docraptor.rb",
+		"/Users/lolapriego/emtrics/app/views/report.erb",
+		"/Users/lolapriego/emtrics/app/helpers/report.rb",
+		"/Users/lolapriego/emtrics/app/helpers/op_stand.rb",
+		"/Users/lolapriego/emtrics/app/views/_creativity_css.erb",
+		"/Users/lolapriego/emtrics/app/views/_creativity_css",
+		"/Users/lolapriego/emtrics/app/views/_report_css.erb",
+		"/Users/lolapriego/emtrics/app/lib/sinatra/simple_session_auth.rb",
+		"/Users/lolapriego/emtrics/app/views/pdf_layout.erb",
+		"/Users/lolapriego/emtrics/public/dashboard/css/reset.css",
+		"/Users/lolapriego/emtrics/public/dashboard/css/styles.less",
+		"/Users/lolapriego/emtrics/app/views/error.erb",
+		"/Users/lolapriego/emtrics/app/views/error_layout.erb",
+		"/Users/lolapriego/emtrics/app/views/op_pdf.erb",
+		"/Users/lolapriego/Library/Application Support/Sublime Text 2/Packages/User/Preferences.sublime-settings",
+		"/Users/lolapriego/emtrics/public/css/error_style_frontof.css",
+		"/Users/lolapriego/emtrics/public/css/error_style.css",
+		"/Users/lolapriego/emtrics/app/views/_opinion_table.erb",
+		"/Users/lolapriego/emtrics/app/views/opinion_points/detail.erb",
+		"/Users/lolapriego/emtrics/app/views/opinions/index.erb",
+		"/Users/lolapriego/emtrics/app/views/business_categories/index.erb",
+		"/Users/lolapriego/emtrics/app/views/users/edit.erb",
+		"/Users/lolapriego/emtrics/app/views/business_categories/view.erb",
+		"/Users/lolapriego/emtrics/app/views/business_categories/new.erb",
+		"/Users/lolapriego/emtrics/app/views/business_categories/_list.erb",
+		"/Users/lolapriego/emtrics/Emtrics.sublime-workspace",
+		"/Users/lolapriego/emtrics/app/views/business_categories/index.haml",
+		"/Users/lolapriego/emtrics/app/views/opinion_points/view.erb",
+		"/Users/lolapriego/emtrics/app/views/users/index.erb",
+		"/Users/lolapriego/emtrics/app/views/users/new.erb",
+		"/Users/lolapriego/emtrics/app/views/businesses/view.erb",
+		"/Users/lolapriego/emtrics/app/controllers/opinion_point_questions.rb",
+		"/Users/lolapriego/emtrics/app/views/business_categories/view.haml",
+		"/Users/lolapriego/emtrics/app/views/_satisfaction_share.erb",
+		"/Users/lolapriego/emtrics/app/views/users/view.erb",
+		"/Users/lolapriego/emtrics/app/views/questions/new.haml",
+		"/Users/lolapriego/emtrics/app/views/questions/view.haml",
+		"/Users/lolapriego/emtrics/app/views/tags/view.haml",
+		"/Users/lolapriego/emtrics/app/models/business_category.rb",
+		"/Users/lolapriego/emtrics/app/views/_table.erb",
+		"/Users/lolapriego/emtrics/TODO.md",
+		"/Users/lolapriego/emtrics/app/views/generic/view.erb",
+		"/Users/lolapriego/emtrics/app/views/generic/edit.haml",
+		"/Users/lolapriego/emtrics/app/views/opinion_points/view.haml",
+		"/Users/lolapriego/emtrics/app/views/generic/index.erb",
+		"/Users/lolapriego/emtrics/app/views/_menu.erb",
+		"/Users/lolapriego/emtrics/app/views/_metadata.haml",
+		"/Users/lolapriego/emtrics/app/views/generic/new.erb",
+		"/Users/lolapriego/emtrics/app/models/opinion.rb",
+		"/Users/lolapriego/emtrics/tests/test_opinion.rb"
+	],
+	"find":
+	{
+		"height": 35.0
+	},
+	"find_in_files":
+	{
+		"height": 93.0,
+		"where_history":
+		[
+			"/Users/lolapriego/Escuela/LSSEDD",
+			"/Users/lolapriego/emtrics/app",
+			"/Users/lolapriego/emtrics/app/controllers",
+			"/Users/lolapriego/emtrics",
+			"/Users/lolapriego/emtrics/app",
+			"/Users/lolapriego/emtrics/app/controllers",
+			"/Users/lolapriego/emtrics/app",
+			"/Users/lolapriego/emtrics/app/controllers",
+			"/Users/lolapriego/emtrics/app",
+			"/Users/lolapriego/emtrics",
+			"/Users/lolapriego/emtrics/app/controllers",
+			"/Users/lolapriego/emtrics/app",
+			"/Users/lolapriego/emtrics",
+			"/Users/lolapriego/emtrics/app",
+			"/Users/lolapriego/emtrics/app/controllers",
+			"/Users/lolapriego/emtrics",
+			"/Users/lolapriego/emtrics/app/controllers",
+			"/Users/lolapriego/emtrics",
+			"/Users/lolapriego/emtrics/app",
+			"/Users/lolapriego/emtrics",
+			"/Users/lolapriego/emtrics/app/models",
+			"/Users/lolapriego/emtrics",
+			"/Users/lolapriego/emtrics/app/controllers",
+			"/Users/lolapriego/emtrics/app",
+			"/Users/lolapriego/emtrics/app/controllers",
+			"/Users/lolapriego/emtrics",
+			"/Users/lolapriego/emtrics/app",
+			"/Users/lolapriego/emtrics/app/controllers",
+			"/Users/lolapriego/emtrics",
+			"/Users/lolapriego/emtrics/app",
+			"/Users/lolapriego/emtrics",
+			"/Users/lolapriego/emtrics/app"
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"valor_previo",
+			"NV",
+			"set16",
+			"puerto_S",
+			"fila_",
+			"sw",
+			"estadoMu",
+			"led",
+			"puerto",
+			"contador",
+			"histori",
+			"V_BA",
+			"V_M",
+			"fon",
+			"app",
+			"user_to_signup",
+			", ",
+			"kick!",
+			"login",
+			"welcome",
+			"validationemail",
+			"url",
+			"name",
+			"flash",
+			"custom_",
+			"?",
+			"sorted",
+			"featur",
+			"unique",
+			"flag",
+			"id",
+			"key",
+			":sorted",
+			"agree",
+			"pass",
+			"name",
+			"busine",
+			"log",
+			"unique",
+			"Turnkey.set_permissions",
+			"Turnkey",
+			"authorize",
+			"register",
+			"haml",
+			"login",
+			"_menu",
+			"notification",
+			"form_fields",
+			"_bread",
+			"widget",
+			"widgets",
+			"nodata",
+			"tags",
+			"response",
+			"haml",
+			"text",
+			"langua",
+			"langu",
+			"question",
+			"t.",
+			"form_fields",
+			"table",
+			"haml",
+			"response/index",
+			"opinion po",
+			"_question_table",
+			"style",
+			"?",
+			"report",
+			"url",
+			"report",
+			"locals",
+			"report",
+			"Gchart",
+			"default",
+			"opinion_point",
+			"@data_logo",
+			"@",
+			"<%=",
+			"simple",
+			"head",
+			"include helper.menu",
+			"Helper",
+			"menu.each",
+			"opinions",
+			"url_ba",
+			"url",
+			"opinions",
+			"detail",
+			"Translations",
+			" %></",
+			"export",
+			"business_cate",
+			"put",
+			"detail",
+			"href",
+			"get",
+			"responses",
+			"ip",
+			"user",
+			"userr",
+			"haml",
+			"_metadata",
+			"create",
+			"@title",
+			"category",
+			"business",
+			" ",
+			"new",
+			"user",
+			"save",
+			"candel",
+			"t.",
+			"male",
+			"pass",
+			"name",
+			"haml :'opinion",
+			"'generic/",
+			"haml",
+			"'generic/",
+			"haml :'_metadata'",
+			"@resource",
+			"op",
+			"opinion point",
+			"17",
+			"2012",
+			"end",
+			"turnkey.set"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"settings":
+					{
+						"buffer_size": 568,
+						"regions":
+						{
+							"match":
+							{
+								"flags": 112,
+								"regions":
+								[
+									[
+										144,
+										156
+									],
+									[
+										470,
+										482
+									]
+								],
+								"scope": ""
+							}
+						},
+						"selection":
+						[
+							[
+								470,
+								470
+							]
+						],
+						"settings":
+						{
+							"detect_indentation": false,
+							"output_tag": 2,
+							"result_base_dir": "",
+							"result_file_regex": "^([A-Za-z\\\\/<].*):$",
+							"result_line_regex": "^ +([0-9]+):",
+							"scroll_past_end": true,
+							"syntax": "Packages/Default/Find Results.hidden-tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 165.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "outputVumetro.c",
+					"settings":
+					{
+						"buffer_size": 832,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "MT-10.c",
+					"settings":
+					{
+						"buffer_size": 3431,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 1416.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "gestion.c",
+					"settings":
+					{
+						"buffer_size": 2513,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 23.0,
+						"translation.y": 591.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "m5272lib.c",
+					"settings":
+					{
+						"buffer_size": 7576,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 0.0
+	},
+	"input":
+	{
+		"height": 31.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"replace":
+	{
+		"height": 0.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+			[
+				"mt",
+				"MT-10.h"
+			],
+			[
+				"tecl",
+				"teclado.c"
+			],
+			[
+				"logi",
+				"app/controllers/login.rb"
+			],
+			[
+				"test/ini",
+				"tests/init.rb"
+			],
+			[
+				"mi",
+				"script/migration.rb"
+			],
+			[
+				"em",
+				"app/helpers/email.rb"
+			],
+			[
+				"url",
+				"app/models/url.rb"
+			],
+			[
+				"v",
+				"app/models/validation_key.rb"
+			],
+			[
+				"sign",
+				"app/controllers/signup.rb"
+			],
+			[
+				"va",
+				"app/models/validation_key.rb"
+			],
+			[
+				"user",
+				"app/models/user.rb"
+			],
+			[
+				"es",
+				"i18n/es.yml"
+			],
+			[
+				"sig",
+				"app/controllers/signup.rb"
+			],
+			[
+				"json",
+				"db/fixtures/prod/02_user.json"
+			],
+			[
+				"defa",
+				"default.gems"
+			],
+			[
+				"us",
+				"app/models/user.rb"
+			],
+			[
+				"test_v",
+				"tests/test_validation_key.rb"
+			],
+			[
+				"test",
+				"tests/test_user.rb"
+			],
+			[
+				"email",
+				"app/helpers/email.rb"
+			],
+			[
+				"lo",
+				"app/controllers/login.rb"
+			],
+			[
+				"login",
+				"app/views/login.erb"
+			],
+			[
+				"en",
+				"i18n/en.yml"
+			],
+			[
+				"ba",
+				"app/backoffice.rb"
+			],
+			[
+				"pr",
+				"pry_init.rb"
+			],
+			[
+				"signu",
+				"app/controllers/signup.rb"
+			],
+			[
+				"style",
+				"public/css/style.css"
+			],
+			[
+				"boi",
+				"public/css/boilerplate.css"
+			],
+			[
+				"con/us",
+				"app/controllers/users.rb"
+			],
+			[
+				"mod/us",
+				"app/models/user.rb"
+			],
+			[
+				"sett.erb",
+				"app/views/settings/edit.erb"
+			],
+			[
+				"jso",
+				"db/fixtures/prod/02_user.json"
+			],
+			[
+				"op/e",
+				"app/views/opinion_points/edit.erb"
+			],
+			[
+				"op_po/ed",
+				"app/views/opinion_points/edit.erb"
+			],
+			[
+				"repor",
+				"app/helpers/report.rb"
+			],
+			[
+				"mode_o",
+				"app/models/opinion_point.rb"
+			],
+			[
+				"_repo",
+				"app/views/_report_css.erb"
+			],
+			[
+				"report",
+				"app/views/report.erb"
+			],
+			[
+				"de",
+				"config/development.rb"
+			],
+			[
+				"deve",
+				"config/development.rb"
+			],
+			[
+				"op",
+				"app/controllers/opinion_points.rb"
+			],
+			[
+				"bac",
+				"app/backoffice.rb"
+			],
+			[
+				"e",
+				"Emtrics.sublime-workspace"
+			],
+			[
+				"devel",
+				"config/development.rb"
+			],
+			[
+				"new",
+				"app/views/generic/new.erb"
+			],
+			[
+				"test_op",
+				"tests/test_opinion.rb"
+			],
+			[
+				"",
+				".gitmodules"
+			],
+			[
+				"cs",
+				"app/lib/sinatra/csrf.rb"
+			],
+			[
+				"config",
+				"config.ru"
+			],
+			[
+				"defau",
+				"default.gems"
+			],
+			[
+				"db",
+				"public/dashboard/js/libs/modules/exporting.js"
+			],
+			[
+				"use",
+				"db/fixtures/prod/02_user.json"
+			],
+			[
+				"per",
+				"app/lib/emtrics/permissions.rb"
+			],
+			[
+				"turn",
+				"app/lib/turnkey.rb"
+			],
+			[
+				"back",
+				"app/backoffice.rb"
+			],
+			[
+				"02",
+				"db/fixtures/prod/02_user.json"
+			],
+			[
+				"mig",
+				"script/migration.rb"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 500.0,
+		"selected_items":
+		[
+		],
+		"width": 380.0
+	},
+	"show_minimap": true,
+	"show_open_files": true,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 311.0,
+	"status_bar_visible": true
+}
