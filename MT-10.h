@@ -4,11 +4,11 @@ extern int atenuacion_reverberacion;
 
 extern int filtro;
 extern int estado;
+extern int historia[2][7];
 
 extern int fila_ilum;
 extern int nv_energia;
-
-extern UWORD puerto_S;
+extern int contador;
 
 int leerADC(void);
 void DAC_dato(int dato);
@@ -18,5 +18,4 @@ int bufferCircular (int tension, int *buffer);
 int filtrado(int tension); //pendiente de hacer una sola matriz historial
 char teclado(void);
 int ADC_dato(void);
-void set16_puertoS (UWORD valor);
 

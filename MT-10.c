@@ -12,7 +12,6 @@
 #include "rutinas.c"
 #include "leerADC.c"
 #include "filtrar.c"
-#include "outputVumetro.c"
 
 #define V_BASE 0x40 // Direcci�n de inicio de los vectores de interrupci�n
 #define DIR_VTMR0 4*(V_BASE+5) // Direcci�n del vector de TMR0
@@ -26,14 +25,23 @@
 
 #define V_MAX 5
 
+
+  typedef struct {
+    WORD variableAux;
+  } TpuertoSalida;
+  TpuertoSalida puerto;
+
   int fila_ilum;
-  int nv_energia; //marca el nv de energía de la señal a sacar por el vúmetro
+  int nv_energia;
+  int contador;
 
 
-  int nv[7]; //marca el nv de energía seleccionado en ecualización
+  int nv[7];
+  int historia[2][7];
   int estado; //variable global que marca el estado del sistema para filtrar
   int filtro; //variable global que marca el filtro seleccionado en el sistema
-
+  int nEnergias [9] = {200,559,1567,4386,12280, 34374,96223,269354, 753992};
+  int estadoMuestra;
   int retardo_reverberacion;
   int atenuacion_reverberacion;
 
@@ -53,6 +61,7 @@
     output("1) Caracterizacion de filtros\n");
     output("2) Ecualizacion Grafica\n");
     output("3) Incorporacion de Reverberacion Simple\n");
+    output("4) Gestion de Reverberacion --- Avanzado---");
     output("====================\n");
 
     opcion=teclado();
@@ -61,12 +70,19 @@
       case '1': printf("Caracterizacion de filtros\n");
                 GestionCaracterizacion();
                 break;
+
       case '2': printf("Ecualizacion Gráfica\n");
                 GestionEcualizacion();
                 break;
-      case'3': printf("Incorporacian de Reverberacion Simple\n");
-               GestionReverberacion();
-               break;
+
+      case '3': printf("Incorporacian de Reverberacion Simple\n");
+                GestionReverberacion();
+                break;
+
+      case '4': printf("Gestion de parametros de Reverberacion\n");
+                GestionAvanzadaReverberacion();
+                break;
+
       default: output("Tecla no valida\n");
     }
   }
@@ -88,6 +104,7 @@
   // ==============
   void swInit(){
     int i;
+    int j;
 
     for(i=0; i<7; i++){
       nv[i] = 0;
@@ -96,8 +113,15 @@
     estado=0;
     filtro=0; //filtro por defecto
 
+    for(i=0; i<2 ;i++)
+      for(j = 0; j < 7; j++)
+        historia[i][j] = 0;
+
+    estadoMuestra=0;
+
     fila_ilum = 0;
     nv_energia = 0;
+    contador = 0;
 
     retardo_reverberacion = 0;
     atenuacion_reverberacion = 0;
@@ -131,4 +155,39 @@
     mbar_writeLong(MCFSIM_ICR1, 0x8888C888); // Marca la interrupción del TIMER0 como no pendiente
     sti(); // Habilitamos interrupciones
   }
+
+  // =============
+  //
+  // =============
+  void puertoExcitaFilaLeds(void){
+    static UWORD led[9]={0x0000,0x0100,0x0300,0x0700,0x0F00,0x1F00,0x3F00,0x7F00,0xFF00};
+    int i;
+    UWORD valor = 1;
+    UWORD valor_previo = 1;
+   // Valor a escribir en el puerto de salida
+    static UINT retVal = 3000; // Retardo introducido en microsegundos. (aprox. 3ms)
+    int nivelEnergia;
+    valor = fila_ilum <<4;
+    puerto_S= puerto_S & 0xFF0F;
+    puerto_S= valor | puerto_S;
+    nivelEnergia=0;
+
+    for(i=1; i < 8; i++){
+      if( ( nEnergias[i-1] < nv_energia) && (nv_energia <= nEnergias[i]) ){
+        nivelEnergia=i;
+        break;
+      }
+    }
+
+    if(nv_energia > nEnergias[8])
+      nivelEnergia = 8;
+
+    puerto_S = puerto_S & 0x00FF;
+    puerto_S = puerto_S | led[nivelEnergia] | valor;
+    set16_puertoS(puerto_S);
+  }
+
+
+
+
 

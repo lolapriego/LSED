@@ -16,8 +16,6 @@
     static int buffer [7200];
     static int salida = 0;
 
-    static int contador = 0;
-
 
     mbar_writeShort(MCFSIM_TER0,BORRA_REF); // Reset del bit de fin de cuent
     if( estado == 1){
