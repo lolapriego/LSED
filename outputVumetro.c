@@ -11,10 +11,8 @@
     int nivelEnergia;
 
     UWORD valor = 1;
-    UWORD valor_previo = 1;
 
    // Valor a escribir en el puerto de salida
-    static UINT retVal = 3000; // Retardo introducido en microsegundos. (aprox. 3ms)
 
     valor = fila_ilum <<4;
     puerto_S= puerto_S & 0xFF0F;
