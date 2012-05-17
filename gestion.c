@@ -88,7 +88,7 @@
     int opcion;
 
     printf("\n=========\nSeleccione alguno de los siguientes parametros de reverberacion a aplicar:\n");
-    for (i=0, i< parametros; i++)
+    for (i=0; i< parametros; i++)
       printf("%d) Atenuacion: %d   Reverberacion: %d\n");
     printf("O pulse E para añadir un parametro de reverberacion y aplicarlo\n");
 

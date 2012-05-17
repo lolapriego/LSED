@@ -61,7 +61,7 @@
     output("1) Caracterizacion de filtros\n");
     output("2) Ecualizacion Grafica\n");
     output("3) Incorporacion de Reverberacion Simple\n");
-    output("4) Gestion de Reverberacion --- Avanzado---")
+    output("4) Gestion de Reverberacion --- Avanzado---");
     output("====================\n");
 
     opcion=teclado();
