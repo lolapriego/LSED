@@ -75,42 +75,5 @@
     printf("\nSeleccione un retardo en escala de x100 milisegundos para el efecto reverberacion\n");
     retardo_reverberacion = (teclado() - '0') * 800; // pasamos la tecla seleccionada al número de interrupciones necesarias
 
-    printf("\nHa seleccionado una atenuacion de: %d \nY un retardo de: %d\n", atenuacion_reverberacion, retardo_reverberacion);
     estado = 3;
-  }
-
-  void GestionAvanzadaReverberacion(){
-    static int atenuaciones[9] = {3, 4, 5, 2, 0, 0, 0, 0, 0};
-    static int retardos[9] = { 800, 1600, 800, 3200, 0, 0, 0, 0, 0};
-    static int parametros = 4;
-
-    int i;
-    int opcion;
-
-    printf("\n=========\nSeleccione alguno de los siguientes parametros de reverberacion a aplicar:\n");
-    for (i=0; i< parametros; i++)
-      printf("%d) Atenuacion: %d   Reverberacion: %d\n");
-    printf("O pulse E para añadir un parametro de reverberacion y aplicarlo\n");
-
-    opcion = teclado() - '0';
-    while ((opcion<= 0 || opcion > parametros)&&opcion!= 21){
-      printf("Por favor pulse una tecla correcta\n");
-      opcion = teclado();
-    }
-
-    if(opcion >0 && opcion <= parametros){
-      atenuacion_reverberacion = atenuaciones[opcion -1];
-      retardo_reverberacion = retardos[opcion - 1];
-
-      estado = 3;
-    }
-
-    else if(opcion == 21 && parametros < 9){
-      GestionReverberacion();
-      atenuaciones[parametros] = atenuacion_reverberacion;
-      retardos[parametros] = retardo_reverberacion;
-
-      parametros ++;
-    }
-
   }

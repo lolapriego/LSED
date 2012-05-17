@@ -12,6 +12,9 @@
     static int B2 = -1024;
     static int filtros_ganancia [7] = {8, 17, 34, 66, 125, 227, 392};
 
+    static int historia[2][7] = {{0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0}};
+
+
     int salida;
     int aux;
 
