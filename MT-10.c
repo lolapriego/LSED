@@ -53,6 +53,7 @@
     output("1) Caracterizacion de filtros\n");
     output("2) Ecualizacion Grafica\n");
     output("3) Incorporacion de Reverberacion Simple\n");
+    output("4) Gestion de Reverberacion --- Avanzado---");
     output("====================\n");
 
     opcion=teclado();
@@ -61,12 +62,19 @@
       case '1': printf("Caracterizacion de filtros\n");
                 GestionCaracterizacion();
                 break;
+
       case '2': printf("Ecualizacion Gráfica\n");
                 GestionEcualizacion();
                 break;
-      case'3': printf("Incorporacian de Reverberacion Simple\n");
-               GestionReverberacion();
-               break;
+
+      case '3': printf("Incorporacian de Reverberacion Simple\n");
+                GestionReverberacion();
+                break;
+
+      case '4': printf("Gestion de parametros de Reverberacion\n");
+                GestionAvanzadaReverberacion();
+                break;
+
       default: output("Tecla no valida\n");
     }
   }
