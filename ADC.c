@@ -4,7 +4,8 @@
 //   Programa sencillo para mostrar el manejo de un conversor Analógico
 //   Digital utilizando QSPI (Queued Serial Peripheral Interface).
 //
-// Autores: Juan Manuel Montero y Rubén San Segundo
+// Autores: Juan Manuel Montero y Rubén San Segundo modificado por
+// Mª Dolores Priego Porcuna
 // Adaptado a C por: Javier Guillén Álvarez
 //------------------------------------------------------------------------------
 #include "m5272lib.c"
@@ -14,25 +15,6 @@
 #define FONDO_ESCALA 0xFFF	// Valor de lectura máxima del ADC
 #define V_MAX 5			// Valores de tensión máxima del ADC
 
-//------------------------------------------------------
-// void __init(void)
-//
-// Descripción:
-//   Función por defecto de inicialización del sistema
-//
-//------------------------------------------------------
-void __init(void)
-{
-  DAC_ADC_init();
-}
-
-//------------------------------------------------------
-// void bucleMain(void)
-//
-// Descripción:
-//   Función del programa principal
-//
-//------------------------------------------------------
 void leeADC(void)
 {
   int lectura;
@@ -64,7 +46,7 @@ printf("%d",lectura);
   output("VALOR MEDIDO ENTRE 0V (000000000000) Y 5V (111111111111) ES: ");
 printf("%d",tension);
   // Imprime 'tensión' con 2 cifras decimales sin signo
-  outNumDec(10,tension,2,SIN_SIGNO); 
+  outNumDec(10,tension,2,SIN_SIGNO);
   output("V (");
 
   // Imprime el dato leído en binario
@@ -74,14 +56,3 @@ printf("%d",tension);
   output(")\r\n");
 }
 
-//---------------------------------------------------------
-// Definición de rutinas de atención a la interrupción
-// Es necesario definirlas aunque estén vacías
-void rutina_int1(void){}
-void rutina_int2(void){}
-void rutina_int3(void){}
-void rutina_int4(void){}
-void rutina_tout0(void){}
-void rutina_tout1(void){}
-void rutina_tout2(void){}
-void rutina_tout3(void){}
