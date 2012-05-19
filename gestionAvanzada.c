@@ -1,6 +1,9 @@
 #include "MT-10.h"
 #include "printf.h"
 
+void GestionAvanzadaReverberacion(void);
+void GestionAvanzadaEcualizacion(void);
+
   void GestionAvanzada(){
     char opcion;
 
@@ -8,7 +11,7 @@
       printf("Seleccione una de las siguientes opciones avanzada\n");
       output("1) Seleccion de pre-sets de Reverberacion\n");
       output("2) Seleccion de pre-sets de Ecualizacion\n");
-      output("E) Volver al menu principal")
+      output("E) Volver al menu principal");
       output("====================\n");
 
       opcion=teclado();
@@ -22,8 +25,7 @@
                   GestionAvanzadaEcualizacion();
                   break;
 
-        case 'E': printf("Incorporacian de Reverberacion Simple\n");
-                  GestionReverberacion();
+        case 'E': printf("Volver al menu principal\n");
                   break;
 
         default: output("====\nTecla no valida, por favor vuelva a introducir una opcion\n");
@@ -40,14 +42,14 @@
     int opcion;
 
     printf("\n=========\nSeleccione alguno de los siguientes parametros de reverberacion a aplicar:\n");
-    for (i=0, i< parametros; i++)
+    for (i=0; i< parametros; i++)
       printf("%d) Atenuacion: %d   Reverberacion: %d\n", i + 1, atenuaciones[i], retardos[i]);
-    printf("O pulse E para añadir un parametro de reverberacion y aplicarlo\n");
+    printf("O pulse la tecla 0 para añadir un parametro de reverberacion y aplicarlo\n");
 
     opcion = teclado() - '0';
-    while ((opcion<= 0 || opcion > parametros)&&opcion!= 21){
+    while (opcion< 0 || opcion > parametros){
       printf("Por favor pulse una tecla correcta\n");
-      opcion = teclado();
+      opcion = teclado() - '0';
     }
 
     if(opcion >0 && opcion <= parametros){
@@ -57,7 +59,7 @@
       estado = 3;
     }
 
-    else if(opcion == 21 && parametros < 9){
+    else if(opcion == 0 && parametros < 9){
       GestionReverberacion();
       atenuaciones[parametros] = atenuacion_reverberacion;
       retardos[parametros] = retardo_reverberacion;
@@ -76,37 +78,43 @@
     int opcion;
 
     printf("\n=========\nSeleccione alguno de los siguientes parametros de ecualizacion a aplicar:\n");
+    printf("\n====BANDA:     32Hz   64Hz   125Hz   250Hz   500Hz   1kHz   2kHz=====\n");
 
     for (i=0, i< parametros; i++){
-      printf("\n====BANDA:     32Hz   64Hz   125Hz   250Hz   500Hz   1kHz   2kHz=====\n");
-      printf("%d)Nivel      %d      %d      %d       %d       %d       %d       %d\n", i + 1, ecualizaciones[i][0], ecualizaciones[i][1], ecualizaciones[i][2]
+      printf("%d)Nivel      %d      %d      %d       %d       %d       %d       %d\n", i + 1, ecualizaciones[i][0], ecualizaciones[i][1], ecualizaciones[i][2],
       ecualizaciones[i][3], ecualizaciones[i][4], ecualizaciones[i][5], ecualizaciones[i][6]);
     }
 
-    printf("O pulse E para añadir un parametro de reverberacion y aplicarlo\n");
+    printf("O pulse la tecla 0 para añadir un parametro de reverberacion y aplicarlo\n");
 
     opcion = teclado() - '0';
-    while ((opcion<= 0 || opcion > parametros)&&opcion!= 21){
+    while (opcion< 0 || opcion > parametros){
       printf("Por favor pulse una tecla correcta\n");
-      opcion = teclado();
+      opcion = teclado() - '0';
     }
 
     if(opcion >0 && opcion <= parametros){
-      nv = ecualizaciones [opcion - 1];
+      for (i=0; i<7; i++)
+        nv[i] = ecualizaciones [opcion - 1][i];
 
       estado = 2;
     }
 
-    else if(opcion == 21 && parametros < 9){
-      printf("=====\nIntroduzca un nuevo parametro de ecualizacion, pulse de forma pausa el nivel para las distintas bandas de frecuencia\n");
+    else if(opcion == 0 && parametros < 9){
+      printf("=====\nIntroduzca un nuevo parametro de ecualizacion, pulse de forma pausada el nivel para las distintas bandas de frecuencia\n");
       for(i = 0;i < 7; i++){
         printf("Nivel para la banda del filtro%d\n", i + 1);
         do{
           opcion = teclado() - '0';
+
+          if (opcion< 0 || opcion > 9)
+            printf("Error pulse un nv entre 0 y 9\n");
         } while(opcion< 0 || opcion > 9);
         ecualizaciones[parametros][i] = opcion;
       }
-      nv = ecualizaciones[parametros];
+
+      for(i=0; i<7; i++)
+        nv[i] = ecualizaciones[parametros][i];
 
       estado = 2;
       parametros ++;

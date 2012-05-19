@@ -1,5 +1,9 @@
 #include "MT-10.h"
 
+#define B0 1024
+#define B1 0
+#define B2 -1024
+
   // =============
   // recibe una tensión de entrada, y según el filtro en el que se encuentre el sistema
   // aplica el sistema de la documentación
@@ -7,10 +11,9 @@
   int filtrado(int tension_ent){
     //Constantes de filtrado necesarias para los cálculos
     static int a [2][7] = {{-2029, -2011, -1970, -1878, -1660, -1115, 141} , {1006, 988, 955, 890, 772, 569, 239}};
-    static int B0 = 1024;
-    static int B1 = 0;
-    static int B2 = -1024;
     static int filtros_ganancia [7] = {8, 17, 34, 66, 125, 227, 392};
+
+    static int historia[2][7] = { {0,0,0,0,0,0,0} , {0,0,0,0,0,0,0}};
 
     int salida;
     int aux;
@@ -20,7 +23,7 @@
     salida = B0 * tension_ent -a[0][filtro] * historia[0][filtro] -a[1][filtro] * historia[1][filtro];
     historia[0][filtro] = salida >> 10;
 
-    salida += B1 * historia[0][filtro] + historia[1][filtro] * B2;
+    salida += B1 * aux + historia[1][filtro] * B2;
     historia[1][filtro] = aux;
 
     salida = salida >> 10;

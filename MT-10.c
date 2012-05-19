@@ -1,5 +1,4 @@
 #include "m5272lib.c"
-#include "m5272lcd.c"
 #include "printf.c"
 #include "m5272adc_dac.c"
 #include "teclado.c"
@@ -26,14 +25,10 @@
 
   int fila_ilum;
   int nv_energia;
-  int contador;
-
 
   int nv[7];
-  int historia[2][7];
   int estado; //variable global que marca el estado del sistema para filtrar
   int filtro; //variable global que marca el filtro seleccionado en el sistema
-  int estadoMuestra;
   int retardo_reverberacion;
   int atenuacion_reverberacion;
 
@@ -96,7 +91,6 @@
   // ==============
   void swInit(){
     int i;
-    int j;
 
     for(i=0; i<7; i++){
       nv[i] = 0;
@@ -105,15 +99,8 @@
     estado=0;
     filtro=0; //filtro por defecto
 
-    for(i=0; i<2 ;i++)
-      for(j = 0; j < 7; j++)
-        historia[i][j] = 0;
-
-    estadoMuestra=0;
-
     fila_ilum = 0;
     nv_energia = 0;
-    contador = 0;
 
     retardo_reverberacion = 0;
     atenuacion_reverberacion = 0;
@@ -154,9 +141,9 @@
   void puertoExcitaFilaLeds(void){
     int nEnergias [9] = {200,559,1567,4386,12280, 34374,96223,269354, 753992};
     static UWORD led[9]={0x0000,0x0100,0x0300,0x0700,0x0F00,0x1F00,0x3F00,0x7F00,0xFF00};
+
     int i;
     UWORD valor = 1;
-
     int nivelEnergia;
 
     valor = fila_ilum <<4;
