@@ -78,4 +78,3 @@
     printf("\nHa seleccionado una atenuacion de: %d \nY un retardo de: %d\n", atenuacion_reverberacion, retardo_reverberacion);
     estado = 3;
   }
-
