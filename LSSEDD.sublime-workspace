@@ -340,7 +340,11 @@
 	},
 	"file_history":
 	[
+		"/Users/lolapriego/Escuela/LSSEDD/MT-10.c",
 		"/Users/lolapriego/Escuela/LSSEDD/filtrar.c",
+		"/Users/lolapriego/Escuela/LSSEDD/MT-10.h",
+		"/Users/lolapriego/Escuela/LSSEDD/gestion.c",
+		"/Users/lolapriego/Escuela/LSSEDD/gestionAvanzada.c",
 		"/Users/lolapriego/emtrics/config/development.rb",
 		"/Users/lolapriego/emtrics/i18n/es.yml",
 		"/Users/lolapriego/emtrics/app/models/user.rb",
@@ -463,11 +467,7 @@
 		"/Users/lolapriego/emtrics/app/views/_metadata.haml",
 		"/Users/lolapriego/emtrics/app/views/generic/new.erb",
 		"/Users/lolapriego/emtrics/app/models/opinion.rb",
-		"/Users/lolapriego/emtrics/tests/test_opinion.rb",
-		"/Users/lolapriego/emtrics/app/views/_menu.haml",
-		"/Users/lolapriego/emtrics/app/views/generic/view.haml",
-		"/Users/lolapriego/emtrics/app/lib/sinatra/csrf.rb",
-		"/Users/lolapriego/emtrics/app/views/layout.haml"
+		"/Users/lolapriego/emtrics/tests/test_opinion.rb"
 	],
 	"find":
 	{
@@ -475,7 +475,7 @@
 	},
 	"find_in_files":
 	{
-		"height": 0.0,
+		"height": 93.0,
 		"where_history":
 		[
 			"/Users/lolapriego/Escuela/LSSEDD",
@@ -517,6 +517,7 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"NV",
 			"set16",
 			"puerto_S",
 			"fila_",
@@ -643,8 +644,7 @@
 			"2012",
 			"end",
 			"turnkey.set",
-			"DateTime.new",
-			"datetime"
+			"DateTime.new"
 		],
 		"highlight": true,
 		"in_selection": false,
