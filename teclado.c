@@ -9,20 +9,20 @@
 //------------------------------------------------------------------------------
 #include "m5272lib.c"
 #include "m5272gpio.c"
+#include "MT-10.h"
 
 #define NUM_FILAS 4
 #define NUM_COLS 4
 #define EXCIT 1
 
 
-UWORD puerto_S=0;
 
 
 //------------------------------------------------------
 // char teclado(void)
 //
 // Descripción:
-//   Explora el teclado matricial y devuelve la tecla 
+//   Explora el teclado matricial y devuelve la tecla
 //   pulsada
 //------------------------------------------------------
 char teclado(void)
@@ -39,7 +39,7 @@ char teclado(void)
 
     // Excitamos una columna
     for(columna = NUM_COLS - 1; columna >= 0; columna--){
-      //set16_puertoS(EXCIT << columna);	
+      //set16_puertoS(EXCIT << columna);
       puerto_S = puerto_S & 0xFFF0;
       puerto_S= (EXCIT << columna) | puerto_S;
       set16_puertoS(puerto_S);		// Se envía la excitación de columna
