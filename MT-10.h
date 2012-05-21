@@ -20,4 +20,4 @@ int filtrado(int tension); //pendiente de hacer una sola matriz historial
 char teclado(void);
 int ADC_dato(void);
 void GestionReverberacion(void);
-
+void set16_puertoS (UWORD valor);
